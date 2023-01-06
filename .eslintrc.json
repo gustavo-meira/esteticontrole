@@ -1,3 +1,17 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "rules": {
+    "prefer-const": "error",
+    "semi": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "@typescript-eslint/no-explicit-any": "error",
+    "quotes": ["error", "single"],
+    "arrow-body-style": ["error", "as-needed"],
+    "indent": ["error", 2],
+    "eol-last": ["error", "always"],
+    "comma-dangle": ["error", "always-multiline"]
+  }
 }
