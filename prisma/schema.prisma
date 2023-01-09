@@ -6,3 +6,46 @@ datasource db {
   provider = "sqlite"
   url      = "file:../database/clients.db"
 }
+
+model Measures {
+  id String @id @default(cuid())
+
+  rightArm   Float?
+  leftArm    Float?
+  chest      Float?
+  waist      Float?
+  hips       Float?
+  butt       Float?
+  rightThigh Float?
+  leftThigh  Float?
+  rightCalf  Float?
+  leftCalf   Float?
+  height     Float?
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String @unique
+}
+
+model Client {
+  id String @id @default(cuid())
+
+  name              String
+  birthDate         DateTime
+  drink             Boolean
+  smoke             Boolean
+  children          Int?
+  sleep             String // Bom - Médio - Ruim
+  feeding           String
+  drinkWater        Float
+  intestine         String
+  surgeries         String?
+  illnesses         String?
+  medicines         String?
+  illnessesInFamily String?
+  mentalHealth      String?
+  otherTreatments   String?
+  indication        String?
+  startingWeight    Float?
+
+  measures Measures?
+}
