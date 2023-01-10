@@ -46,6 +46,7 @@ model Client {
   otherTreatments   String?
   indication        String?
   startingWeight    Float?
+  description       String?
 
   measures Measures?
 }
