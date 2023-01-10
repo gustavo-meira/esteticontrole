@@ -36,6 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       otherTreatments: z.string().optional(),
       indication: z.string().optional(),
       startingWeight: z.number().optional(),
+      description: z.string().optional(),
       measures: z.object({
         rightArm: z.number().optional(),
         leftArm: z.number().optional(),
