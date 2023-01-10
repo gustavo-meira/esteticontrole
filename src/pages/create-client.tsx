@@ -1,7 +1,12 @@
+import { FormsCreateClient } from '../components/Forms/FormsCreateClient';
+
 const CreateClientPage = () => (
-  <p>
+  <>
+    <h2>
       Criar cliente
-  </p>
+    </h2>
+    <FormsCreateClient />
+  </>
 );
 
 export default CreateClientPage;
