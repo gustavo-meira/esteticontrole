@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       name: z.string(),
       birthDate: z.string()
         .datetime()
-        .refine((birthDate) => new Date(birthDate)),
+        .transform((birthDate) => new Date(birthDate)),
       drink: z.boolean(),
       smoke: z.boolean(),
       children: z.number().optional(),
