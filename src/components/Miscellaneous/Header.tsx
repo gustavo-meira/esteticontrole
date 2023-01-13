@@ -9,13 +9,16 @@ export const Header = () => (
         alt="Flor de lótus"
         width={98}
         height={98}
+        priority
       />
       <h2>EstetiControle</h2>
     </div>
-    <ul>
-      <li><Link href="/schedule">Agenda</Link></li>
-      <li><Link href="/client">Cliente</Link></li>
-      <li><Link href="/statistics">Estatísticas</Link></li>
-    </ul>
+    <nav>
+      <ul>
+        <li><Link href="/schedule">Agenda</Link></li>
+        <li><Link href="/client">Cliente</Link></li>
+        <li><Link href="/statistics">Estatísticas</Link></li>
+      </ul>
+    </nav>
   </header>
 );
