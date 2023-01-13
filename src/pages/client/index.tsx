@@ -1,5 +1,6 @@
 import { Client } from '@prisma/client';
 import { GetServerSideProps } from 'next';
+import { useState } from 'react';
 import { CardClient } from '../../components/Cards/CardClient';
 import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
@@ -8,18 +9,35 @@ type ClientPageProps = {
   clients: Client[];
 };
 
-const ClientPage = ({ clients }: ClientPageProps) => (
-  <>
-    <Header />
-    <div>
-      {
-        clients.map((client) => (
-          <CardClient key={client.id} client={client} />
-        ))
-      }
-    </div>
-  </>
-);
+const ClientPage = ({ clients }: ClientPageProps) => {
+  const [clientFilter, setClientFilter] = useState('');
+
+  const clientsFiltered = clients.filter((client) => (
+    client.name.toLowerCase().includes(clientFilter.toLowerCase())
+  ));
+
+  const clientsInOrder = clientsFiltered.sort((clientA, clientB) => (
+    clientA.name.localeCompare(clientB.name)
+  ));
+
+  return (
+    <>
+      <Header />
+      <input
+        placeholder="Nome do cliente"
+        onChange={(e) => setClientFilter(e.target.value)}
+        value={clientFilter}
+      />
+      <div>
+        {
+          clientsInOrder.map((client) => (
+            <CardClient key={client.id} client={client} />
+          ))
+        }
+      </div>
+    </>
+  );
+};
 
 export default ClientPage;
 
