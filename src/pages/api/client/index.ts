@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const clients = await prisma.client.findMany({});
   
-    res.status(200).json({ clients });
+    res.status(200).json(clients);
   }
 
   if (req.method === 'POST') {
