@@ -1,5 +1,6 @@
 import { Client, Measures } from '@prisma/client';
 import { GetServerSideProps } from 'next';
+import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
 
 type ClientComplete = Client & { measures?: Measures };
@@ -13,7 +14,10 @@ const ClientPage = ({ client }: ClientPageProps) => {
   if (!client) return <p>Client not found.</p>;
   
   return (
-    <p>{JSON.stringify(client, null, 2)}</p>
+    <>
+      <Header />
+      <p>{JSON.stringify(client, null, 2)}</p>
+    </>
   );
 };
 

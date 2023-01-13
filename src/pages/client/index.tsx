@@ -1,6 +1,7 @@
 import { Client } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import { CardClient } from '../../components/Cards/CardClient';
+import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
 
 type ClientPageProps = {
@@ -8,13 +9,16 @@ type ClientPageProps = {
 };
 
 const ClientPage = ({ clients }: ClientPageProps) => (
-  <div>
-    {
-      clients.map((client) => (
-        <CardClient key={client.id} client={client} />
-      ))
-    }
-  </div>
+  <>
+    <Header />
+    <div>
+      {
+        clients.map((client) => (
+          <CardClient key={client.id} client={client} />
+        ))
+      }
+    </div>
+  </>
 );
 
 export default ClientPage;
