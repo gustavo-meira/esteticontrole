@@ -1,5 +1,6 @@
 import { Client } from '@prisma/client';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import { useState } from 'react';
 import { CardClient } from '../../components/Cards/CardClient';
 import { Header } from '../../components/Miscellaneous/Header';
@@ -28,6 +29,9 @@ const ClientPage = ({ clients }: ClientPageProps) => {
         onChange={(e) => setClientFilter(e.target.value)}
         value={clientFilter}
       />
+      <Link href="/create-client">
+        <button type="button">Cadastrar</button>
+      </Link>
       <div>
         {
           clientsInOrder.map((client) => (
