@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { z, ZodError } from 'zod';
 import { prisma } from '../../../lib/prisma';
 
-const acceptedMethods = ['PUT', 'PATCH'];
+const acceptedMethods = ['PUT', 'PATCH', 'DELETE'];
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!acceptedMethods.includes(req.method as string)) {
@@ -70,6 +70,34 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(500).send({});
     }
   }
+
+  if (req.method === 'DELETE') {
+    const id = req.query.id;
+    
+    const idPackageToDeleteSchema = z.string({
+      invalid_type_error: 'id must be a string',
+    }).cuid({
+      message: 'id must be a cuid',
+    });
+
+    try {
+      const idPackageToDelete = idPackageToDeleteSchema.parse(id);
+  
+      const packageDeleted = await prisma.package.delete({
+        where: {
+          id: idPackageToDelete,
+        },
+      });
+  
+      res.status(200).json(packageDeleted);
+    } catch (err) {
+      if (err instanceof ZodError) {
+        res.status(400).json({ message: err.message });
+      }
+
+      res.status(500).send({});
+    }
+  } 
 };
 
 export default handler;
