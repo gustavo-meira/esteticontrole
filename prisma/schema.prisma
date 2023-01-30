@@ -49,4 +49,17 @@ model Client {
   description       String?
 
   measures Measures?
+  packages Package[]
+}
+
+model Package {
+  id String @id @default(cuid())
+
+  date      DateTime?
+  treatment String?
+  value     Float?
+  paid      Boolean @default(false)
+
+  client   Client @relation(fields: [clientId], references: [id])
+  clientId String
 }
