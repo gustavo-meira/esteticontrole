@@ -3,7 +3,9 @@ import { GetServerSideProps } from 'next';
 import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
 
-type ClientComplete = Client & { measures?: Measures };
+type ClientComplete = Client & {
+  measures?: Measures;
+};
 
 type ClientPageProps = {
   client: ClientComplete | null,
@@ -13,10 +15,16 @@ const ClientPage = ({ client }: ClientPageProps) => {
   
   if (!client) return <p>Client not found.</p>;
   
+  const clientBirthDate = new Date(client.birthDate).toLocaleDateString('pt-BR');
+
   return (
     <>
       <Header />
-      <p>{JSON.stringify(client, null, 2)}</p>
+      <div>
+        <p>{client.name}</p>
+        <p>{clientBirthDate}</p>
+        <p>{client.description}</p>
+      </div>
     </>
   );
 };
