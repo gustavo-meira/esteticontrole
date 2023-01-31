@@ -15,6 +15,7 @@ export const TableClientPackages = ({ clientPackages }: TableClientPackagesProps
           <td>Procedimento</td>
           <td>Valor</td>
           <td>Pago</td>
+          <td>Salvar/Deletar</td>
         </tr>
       </thead>
       <tbody>
