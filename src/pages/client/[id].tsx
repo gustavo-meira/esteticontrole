@@ -1,10 +1,12 @@
-import { Client, Measures } from '@prisma/client';
+import { Client, Measures, Package } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import { Header } from '../../components/Miscellaneous/Header';
+import { TableClientPackages } from '../../components/Tables/TableClientPackages';
 import { api } from '../../lib/api';
 
 type ClientComplete = Client & {
   measures?: Measures;
+  packages: Package[];
 };
 
 type ClientPageProps = {
@@ -25,6 +27,7 @@ const ClientPage = ({ client }: ClientPageProps) => {
         <p>{clientBirthDate}</p>
         <p>{client.description}</p>
       </div>
+      <TableClientPackages clientPackages={client.packages} />
     </>
   );
 };
