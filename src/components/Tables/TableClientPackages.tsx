@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { api } from '../../lib/api';
 import { sortPackages } from '../../utils/sortPackages';
 import { RowClientPackage } from '../Rows/RowClientPackage';
+import { changeEditedPackageToArray } from '../../utils/changeEditedPackageToArray';
 
 type TableClientPackagesProps = {
   clientPackages: Package[];
@@ -20,6 +21,16 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
     });
 
     setClientPackages([packageCreated.data, ...clientPackages]);
+  };
+
+  const onChangePaidStatus = async (packageId: string, value: boolean) => {
+    const currentUrl = document.location.origin;
+
+    const packageEdited = await api.patch<Package>(`${currentUrl}/api/package/${packageId}`, {
+      paid: value,
+    });
+
+    setClientPackages(changeEditedPackageToArray(clientPackages, packageEdited.data));
   };
 
   return (
@@ -41,6 +52,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
               <RowClientPackage
                 key={clientPackage.id}
                 clientPackage={clientPackage}
+                onChangePaidStatus={onChangePaidStatus}
               />
             ))
           }
