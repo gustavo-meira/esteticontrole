@@ -33,6 +33,14 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
     setClientPackages(changeEditedPackageToArray(clientPackages, packageEdited.data));
   };
 
+  const onDeleteAPackage = async (packageId: string) => {
+    const currentUrl = document.location.origin;
+
+    await api.delete<Package>(`${currentUrl}/api/package/${packageId}`);
+
+    setClientPackages(clientPackages.filter(({ id }) => packageId !== id));
+  };
+
   return (
     <>
       <button onClick={onCreateNewRow} type="button">Nova Linha</button>
@@ -53,6 +61,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
                 key={clientPackage.id}
                 clientPackage={clientPackage}
                 onChangePaidStatus={onChangePaidStatus}
+                onDelete={onDeleteAPackage}
               />
             ))
           }

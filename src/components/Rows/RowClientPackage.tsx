@@ -4,9 +4,10 @@ import { useState } from 'react';
 type RowClientPackageProps = {
   clientPackage: Package;
   onChangePaidStatus: (packageId: string, value: boolean) => void;
+  onDelete: (packageId: string) => void;
 };
 
-export const RowClientPackage = ({ clientPackage, onChangePaidStatus }: RowClientPackageProps) => {
+export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete }: RowClientPackageProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const packageDate = clientPackage?.date ? new Date(clientPackage.date) : null;
@@ -25,6 +26,7 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus }: RowClien
         </td>
         <td>
           <button onClick={() => setIsEditing(false)} type="button">Salvar</button>
+          <button onClick={() => onDelete(clientPackage.id)}>Deletar</button>
         </td>
       </tr>
     );
