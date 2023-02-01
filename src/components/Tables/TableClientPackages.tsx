@@ -41,6 +41,18 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
     setClientPackages(clientPackages.filter(({ id }) => packageId !== id));
   };
 
+  const onSaveAPackage = async (savedPackage: Package) => {
+    const currentUrl = document.location.origin;
+
+    const savedPackageApi = await api.put<Package>(`${currentUrl}/api/package/${savedPackage.id}`, {
+      ...savedPackage,
+    });
+
+    setClientPackages(
+      changeEditedPackageToArray(clientPackages, savedPackageApi.data).sort(sortPackages)
+    );
+  };
+
   return (
     <>
       <button onClick={onCreateNewRow} type="button">Nova Linha</button>
@@ -62,6 +74,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
                 clientPackage={clientPackage}
                 onChangePaidStatus={onChangePaidStatus}
                 onDelete={onDeleteAPackage}
+                onEditing={onSaveAPackage}
               />
             ))
           }
