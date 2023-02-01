@@ -1,5 +1,6 @@
 import { Package } from '@prisma/client';
 import { useState } from 'react';
+import { api } from '../../lib/api';
 
 type RowClientPackageProps = {
   clientPackage: Package;
@@ -7,9 +8,23 @@ type RowClientPackageProps = {
 
 export const RowClientPackage = ({ clientPackage }: RowClientPackageProps) => {
   const [isEditing, setIsEditing] = useState(false);
+
   const packageDate = clientPackage?.date ? new Date(clientPackage.date) : null;
   packageDate?.setHours(0);
   const packageDateAsString = packageDate ? packageDate.toLocaleDateString('pt-BR') : 'A combinar';
+
+  const [paidEdit, setPaidEdit] = useState(clientPackage.paid);
+
+  const onChangePaid = async () => {
+    const currentUrl = document.location.origin;
+
+    const packageEdited = await api.patch<Package>(`${currentUrl}/api/package/${clientPackage.id}`, {
+      id: clientPackage.id,
+      paid: !paidEdit,
+    });
+
+    setPaidEdit(packageEdited.data.paid);
+  };
 
   if (isEditing) {
     return (
@@ -18,8 +33,8 @@ export const RowClientPackage = ({ clientPackage }: RowClientPackageProps) => {
         <td><input type="text" /></td>
         <td><input type="number" step=".01" /></td>
         <td>
-          <input type="checkbox" checked={clientPackage.paid} />
-          { clientPackage.paid ? 'Pago' : 'Devendo' }
+          <input type="checkbox" checked={paidEdit} />
+          { paidEdit ? 'Pago' : 'Devendo' }
         </td>
         <td>
           <button onClick={() => setIsEditing(false)} type="button">Salvar</button>
@@ -34,8 +49,8 @@ export const RowClientPackage = ({ clientPackage }: RowClientPackageProps) => {
       <td>{clientPackage.treatment}</td>
       <td>{clientPackage.value}</td>
       <td>
-        <input type="checkbox" checked={clientPackage.paid} />
-        { clientPackage.paid ? 'Pago' : 'Devendo' }
+        <input onChange={onChangePaid} type="checkbox" checked={paidEdit} />
+        { paidEdit ? 'Pago' : 'Devendo' }
       </td>
     </tr>
   );
