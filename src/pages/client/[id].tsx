@@ -27,7 +27,7 @@ const ClientPage = ({ client }: ClientPageProps) => {
         <p>{clientBirthDate}</p>
         <p>{client.description}</p>
       </div>
-      <TableClientPackages clientPackages={client.packages} />
+      <TableClientPackages clientId={client.id} clientPackages={client.packages} />
     </>
   );
 };
