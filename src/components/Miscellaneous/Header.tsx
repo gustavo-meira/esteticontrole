@@ -4,13 +4,15 @@ import Link from 'next/link';
 export const Header = () => (
   <header>
     <div>
-      <Image
-        src="/assets/lotus-flower.svg"
-        alt="Flor de lótus"
-        width={98}
-        height={98}
-        priority
-      />
+      <Link href="/">
+        <Image
+          src="/assets/lotus-flower.svg"
+          alt="Flor de lótus"
+          width={98}
+          height={98}
+          priority
+        />
+      </Link>
       <h2>EstetiControle</h2>
     </div>
     <nav>
