@@ -1,5 +1,6 @@
 import { Client, Measures, Package } from '@prisma/client';
 import { GetServerSideProps } from 'next';
+import Link from 'next/link';
 import { Header } from '../../components/Miscellaneous/Header';
 import { TableClientPackages } from '../../components/Tables/TableClientPackages';
 import { api } from '../../lib/api';
@@ -27,6 +28,9 @@ const ClientPage = ({ client }: ClientPageProps) => {
         <p>{clientBirthDate}</p>
         <p>{client.description}</p>
       </div>
+      <Link href={`/client/${client.id}/edit`}>
+        <button type="button">Editar</button>
+      </Link>
       <TableClientPackages clientId={client.id} clientPackages={client.packages} />
     </>
   );
