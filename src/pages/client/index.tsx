@@ -1,10 +1,13 @@
+import { Box, Button, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { Client } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { MagnifyingGlass, PencilSimpleLine } from 'phosphor-react';
 import { useState } from 'react';
 import { CardClient } from '../../components/Cards/CardClient';
 import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type ClientPageProps = {
   clients: Client[];
@@ -12,6 +15,7 @@ type ClientPageProps = {
 
 const ClientPage = ({ clients }: ClientPageProps) => {
   const [clientFilter, setClientFilter] = useState('');
+  const [animationParent] = useAutoAnimate();
 
   const clientsFiltered = clients.filter((client) => (
     client.name.toLowerCase().includes(clientFilter.toLowerCase())
@@ -24,21 +28,62 @@ const ClientPage = ({ clients }: ClientPageProps) => {
   return (
     <>
       <Header />
-      <input
-        placeholder="Nome do cliente"
-        onChange={(e) => setClientFilter(e.target.value)}
-        value={clientFilter}
-      />
-      <Link href="/create-client">
-        <button type="button">Cadastrar</button>
-      </Link>
-      <div>
-        {
-          clientsInOrder.map((client) => (
-            <CardClient key={client.id} client={client} />
-          ))
-        }
-      </div>
+      <Box
+        bgColor="#FBFBFB"
+        height="full"
+      >
+        <Flex
+          justifyContent="center"
+        >
+          <InputGroup
+            mt="5"
+            width="4xl"
+          >
+            <InputRightElement>
+              <MagnifyingGlass />
+            </InputRightElement>
+            <Input
+              placeholder="Nome do cliente"
+              onChange={(e) => setClientFilter(e.target.value)}
+              value={clientFilter}
+              variant="filled"
+              bgColor="#F1D7FF99"
+            />
+          </InputGroup>
+        </Flex>
+        <Link href="/create-client">
+          <Button
+            type="button"
+            variant="solid"
+            border="2px solid #734A91"
+            bgColor="#734A91"
+            color="#FFFFFF"
+            colorScheme="purple"
+            display="flex"
+            gap="2"
+            fontFamily="Poppins"
+            position="fixed"
+            bottom="16"
+            right="16"
+          >
+            <PencilSimpleLine />
+            Cadastrar
+          </Button>
+        </Link>
+        <Flex
+          p="30px 60px"
+          gap="14"
+          flexWrap="wrap"
+          ref={animationParent}
+          height="100%"
+        >
+          {
+            clientsInOrder.map((client) => (
+              <CardClient key={client.id} client={client} />
+            ))
+          }
+        </Flex>
+      </Box>
     </>
   );
 };
