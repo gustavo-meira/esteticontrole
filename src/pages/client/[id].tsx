@@ -1,6 +1,7 @@
 import { Client, Measures, Package } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
+import { ContainerBasic } from '../../components/Containers/ContainerBasic';
 import { Header } from '../../components/Miscellaneous/Header';
 import { TableClientPackages } from '../../components/Tables/TableClientPackages';
 import { api } from '../../lib/api';
@@ -21,7 +22,7 @@ const ClientPage = ({ client }: ClientPageProps) => {
   const clientBirthDate = new Date(client.birthDate).toLocaleDateString('pt-BR');
 
   return (
-    <>
+    <ContainerBasic>
       <Header />
       <div>
         <p>{client.name}</p>
@@ -32,7 +33,7 @@ const ClientPage = ({ client }: ClientPageProps) => {
         <button type="button">Editar</button>
       </Link>
       <TableClientPackages clientId={client.id} clientPackages={client.packages} />
-    </>
+    </ContainerBasic>
   );
 };
 

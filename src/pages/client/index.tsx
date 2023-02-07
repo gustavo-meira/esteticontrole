@@ -8,6 +8,7 @@ import { CardClient } from '../../components/Cards/CardClient';
 import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
+import { ContainerBasic } from '../../components/Containers/ContainerBasic';
 
 type ClientPageProps = {
   clients: Client[];
@@ -26,7 +27,7 @@ const ClientPage = ({ clients }: ClientPageProps) => {
   ));
 
   return (
-    <>
+    <ContainerBasic>
       <Header />
       <Box
         bgColor="#FBFBFB"
@@ -65,6 +66,7 @@ const ClientPage = ({ clients }: ClientPageProps) => {
             position="fixed"
             bottom="16"
             right="16"
+            zIndex="1"
           >
             <PencilSimpleLine />
             Cadastrar
@@ -84,7 +86,7 @@ const ClientPage = ({ clients }: ClientPageProps) => {
           }
         </Flex>
       </Box>
-    </>
+    </ContainerBasic>
   );
 };
 
