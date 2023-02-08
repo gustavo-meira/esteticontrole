@@ -5,6 +5,7 @@ import { sortPackages } from '../../utils/sortPackages';
 import { RowClientPackage } from '../Rows/RowClientPackage';
 import { changeEditedPackageToArray } from '../../utils/changeEditedPackageToArray';
 import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 
 type TableClientPackagesProps = {
   clientPackages: Package[];
@@ -56,7 +57,14 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
 
   return (
     <>
-      <button onClick={onCreateNewRow} type="button">Nova Linha</button>
+      <ButtonPrimary
+        onClick={onCreateNewRow}
+        alignSelf="flex-end"
+        mr="12"
+        mb="4"
+      >
+        Adicionar Nova Linha
+      </ButtonPrimary>
       <TableContainer fontFamily="Poppins">
         <Table variant="striped" colorScheme="purple">
           <Thead>
