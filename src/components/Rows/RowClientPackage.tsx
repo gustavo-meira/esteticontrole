@@ -1,5 +1,8 @@
+import { Checkbox, Input, Td, Tr } from '@chakra-ui/react';
 import { Package } from '@prisma/client';
 import { useState } from 'react';
+import { ButtonPrimary } from '../Buttons/ButtonPrimary';
+import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 
 type RowClientPackageProps = {
   clientPackage: Package;
@@ -15,7 +18,7 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
   packageDate?.setHours(0);
   const packageDateAsString = packageDate ? packageDate.toLocaleDateString('pt-BR') : 'A combinar';
 
-  const [dateEdit, setDateEdit] = useState<Date | null>(packageDate);
+  const [dateEdit, setDateEdit] = useState(packageDate?.toISOString().slice(0, 10) || '');
   const [treatmentEdit, setTreatmentEdit] = useState(clientPackage.treatment || '');
   const [valueEdit, setValueEdit] = useState(clientPackage.value?.toString() || '');
   const [paidEdit, setPaidEdit] = useState(clientPackage.paid);
@@ -40,44 +43,49 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
   };
 
   if (isEditing) {
-    let dateToEdit = '';
-
-    if (dateEdit !== null) {
-      try {
-        dateToEdit = new Date(dateEdit).toISOString().slice(0, 10);
-      } catch {}
-    }
-
     return (
-      <tr>
-        <td><input onChange={(e) => setDateEdit(new Date(e.target.value))} value={dateToEdit} type="date" /></td>
-        <td><input onChange={(e) => setTreatmentEdit(e.target.value)} value={treatmentEdit || ''} type="text" /></td>
-        <td><input onChange={(e) => setValueEdit(e.target.value)} value={valueEdit} type="number" step=".01" /></td>
-        <td>
-          <input onChange={() => setPaidEdit(!paidEdit)} type="checkbox" checked={paidEdit} />
-          { paidEdit ? 'Pago' : 'Devendo' }
-        </td>
-        <td>
-          <button onClick={onSaveClick} type="button">Salvar</button>
-          <button onClick={() => onDelete(clientPackage.id)}>Deletar</button>
-        </td>
-      </tr>
+      <Tr height="53px">
+        <Td><Input bgColor="white" onChange={(e) => setDateEdit(e.target.value)} value={dateEdit} type="date" /></Td>
+        <Td><Input bgColor="white" onChange={(e) => setTreatmentEdit(e.target.value)} value={treatmentEdit || ''} type="text" /></Td>
+        <Td><Input bgColor="white" onChange={(e) => setValueEdit(e.target.value)} value={valueEdit} type="number" step=".01" /></Td>
+        <Td>
+          <Checkbox
+            borderColor="black"
+            colorScheme="purple"
+            onChange={() => setPaidEdit(!paidEdit)}
+            isChecked={paidEdit}
+          >
+            { paidEdit ? 'Pago' : 'Devendo' }
+          </Checkbox>
+        </Td>
+        <Td
+          display="flex"
+          gap="2"
+        >
+          <ButtonPrimary onClick={onSaveClick}>Salvar</ButtonPrimary>
+          <ButtonSecondary onClick={() => onDelete(clientPackage.id)}>Deletar</ButtonSecondary>
+        </Td>
+      </Tr>
     );
   }
 
   return (
-    <tr onDoubleClick={() => setIsEditing(true)}>
-      <td>{packageDateAsString}</td>
-      <td>{clientPackage.treatment}</td>
-      <td>{clientPackage.value}</td>
-      <td>
-        <input
+    <Tr height="4" onDoubleClick={() => setIsEditing(true)}>
+      <Td>{packageDateAsString}</Td>
+      <Td>{clientPackage.treatment}</Td>
+      <Td isNumeric>{clientPackage.value}</Td>
+      <Td>
+        <Checkbox
           onChange={() => onChangePaidStatus(clientPackage.id, !clientPackage.paid)}
-          type="checkbox"
-          checked={clientPackage.paid}
-        />
-        { clientPackage.paid ? 'Pago' : 'Devendo' }
-      </td>
-    </tr>
+          isChecked={clientPackage.paid}
+          colorScheme="purple"
+          borderColor="black"
+          mr="2"
+        >
+          { clientPackage.paid ? 'Pago' : 'Devendo' }
+        </Checkbox>
+      </Td>
+      <Td />
+    </Tr>
   );
 };

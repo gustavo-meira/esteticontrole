@@ -4,6 +4,8 @@ import { api } from '../../lib/api';
 import { sortPackages } from '../../utils/sortPackages';
 import { RowClientPackage } from '../Rows/RowClientPackage';
 import { changeEditedPackageToArray } from '../../utils/changeEditedPackageToArray';
+import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
+import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 
 type TableClientPackagesProps = {
   clientPackages: Package[];
@@ -55,31 +57,41 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
 
   return (
     <>
-      <button onClick={onCreateNewRow} type="button">Nova Linha</button>
-      <table>
-        <thead>
-          <tr>
-            <td>Data</td>
-            <td>Procedimento</td>
-            <td>Valor</td>
-            <td>Pago</td>
-            <td>Salvar/Deletar</td>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            clientPackages.map((clientPackage) => (
-              <RowClientPackage
-                key={clientPackage.id}
-                clientPackage={clientPackage}
-                onChangePaidStatus={onChangePaidStatus}
-                onDelete={onDeleteAPackage}
-                onEditing={onSaveAPackage}
-              />
-            ))
-          }
-        </tbody>
-      </table>
+      <ButtonPrimary
+        onClick={onCreateNewRow}
+        width="fit-content"
+        alignSelf="flex-end"
+        mr="12"
+        mb="4"
+      >
+        Adicionar Nova Linha
+      </ButtonPrimary>
+      <TableContainer fontFamily="Poppins">
+        <Table variant="striped" colorScheme="purple">
+          <Thead>
+            <Tr>
+              <Th>Data</Th>
+              <Th>Procedimento</Th>
+              <Th>Valor</Th>
+              <Th>Pago</Th>
+              <Th>Salvar/Deletar</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {
+              clientPackages.map((clientPackage) => (
+                <RowClientPackage
+                  key={clientPackage.id}
+                  clientPackage={clientPackage}
+                  onChangePaidStatus={onChangePaidStatus}
+                  onDelete={onDeleteAPackage}
+                  onEditing={onSaveAPackage}
+                />
+              ))
+            }
+          </Tbody>
+        </Table>
+      </TableContainer>
     </>
   );
 };
