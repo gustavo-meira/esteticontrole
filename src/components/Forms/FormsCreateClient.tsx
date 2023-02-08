@@ -6,19 +6,30 @@ import { useRouter } from 'next/router';
 import { api } from '../../lib/api';
 import { Client, Measures } from '@prisma/client';
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Textarea } from '@chakra-ui/react';
+import { serializeClientToForms } from '../../utils/serializeClientToForms';
 
 type CreateClientSchema = z.infer<typeof createClientSchema>;
 
-export const FormsCreateClient = () => {
+type FormsCreateClientProps = {
+  client?: Client & { measures: Measures };
+};
+
+export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
   const router = useRouter();
   const { register, handleSubmit, formState: { errors } } = useForm<CreateClientSchema>({
     resolver: zodResolver(createClientSchema),
+    values: serializeClientToForms(client),
   });
 
   const onSubmit: SubmitHandler<CreateClientSchema> = async (data) => {
     const currentUrl = document.location.origin;
-    const receivedData = await api.post<Client & { measures: Measures }>(`${currentUrl}/api/client`, data);
-    router.push(`/client/${receivedData.data.id}`);
+    if (client) {
+      const receivedClient = await api.put<Client>(`${currentUrl}/api/client/${client.id}`, data);
+      router.push(`/client/${receivedClient.data.id}`);
+    } else {
+      const receivedClient = await api.post<Client>(`${currentUrl}/api/client`, data);
+      router.push(`/client/${receivedClient.data.id}`);
+    }
   };
 
   return (
@@ -29,7 +40,7 @@ export const FormsCreateClient = () => {
         fontSize="5xl"
         mt="4"
       >
-        Cadastrar Cliente
+        { client ? 'Editar' : 'Cadastrar' } Cliente
       </Heading>
       <FormControl
         p="8"
@@ -49,7 +60,7 @@ export const FormsCreateClient = () => {
           </Box>
           <Box width="30%">
             <FormLabel fontSize="lg" htmlFor="birthDate">Data de nasc.*</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="date" id="birthDate" {...register('birthDate', { valueAsDate: true })}/>
+            <Input borderRadius="7px" bgColor="#F1D7FF99" type="date" id="birthDate" {...register('birthDate')}/>
             { errors.birthDate && <FormErrorMessage>{errors.birthDate.message}</FormErrorMessage> }
           </Box>
         </Flex>
