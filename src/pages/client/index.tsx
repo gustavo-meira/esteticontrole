@@ -78,6 +78,7 @@ const ClientPage = ({ clients }: ClientPageProps) => {
           flexWrap="wrap"
           ref={animationParent}
           height="100%"
+          justifyContent="space-evenly"
         >
           {
             clientsInOrder.map((client) => (
