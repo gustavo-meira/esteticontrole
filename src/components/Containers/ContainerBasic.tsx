@@ -13,6 +13,7 @@ export const ContainerBasic = ({ children }: ContainerBasicProps) => (
     flexDir="column"
     bgColor="#FBFBFB"
     p="0"
+    fontFamily="Poppins"
   >
     {children}
   </Container>
