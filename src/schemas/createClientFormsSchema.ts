@@ -7,8 +7,7 @@ export const createClientSchema = z.object({
     .min(3, { message: 'Nome precisa ter pelo menos 3 caracteres.' }),
   birthDate: z.string({
     required_error: 'Data de nascimento é requerida.',
-  })
-    .datetime(),
+  }),
   drink: z.string(),
   smoke: z.string(),
   children: z.string().optional(),
