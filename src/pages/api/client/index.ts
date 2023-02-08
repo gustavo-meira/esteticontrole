@@ -19,8 +19,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const clientToCreateSchema = z.object({
       name: z.string(),
       birthDate: z.string()
-        .datetime()
-        .transform((birthDate) => new Date(birthDate)),
+        .transform((birthDate) => new Date(birthDate))
+        .refine((date) => date.setDate(date.getDate() + 1)),
       drink: z.enum(['true', 'false']).transform((value) => value === 'true'),
       smoke: z.enum(['true', 'false']).transform((value) => value === 'true'),
       children: z.string().transform((value) => Number(value)).optional(),

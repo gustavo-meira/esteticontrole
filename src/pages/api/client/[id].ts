@@ -33,8 +33,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const editClientSchema = z.object({
       name: z.string(),
       birthDate: z.string()
-        .datetime()
-        .transform((birthDate) => new Date(birthDate)),
+        .transform((birthDate) => new Date(birthDate))
+        .refine((date) => date.setDate(date.getDate() + 1)),
       drink: z.string().transform((value) => value === 'true'),
       smoke: z.string().transform((value) => value === 'true'),
       children: z.string().transform((value) => Number(value)).optional(),
