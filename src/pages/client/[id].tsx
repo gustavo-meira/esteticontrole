@@ -1,9 +1,8 @@
 import { Client, Measures, Package } from '@prisma/client';
 import { GetServerSideProps } from 'next';
-import Link from 'next/link';
 import { ContainerBasic } from '../../components/Containers/ContainerBasic';
 import { Header } from '../../components/Miscellaneous/Header';
-import { TableClientPackages } from '../../components/Tables/TableClientPackages';
+import { TabClient } from '../../components/Tabs/TabClient';
 import { api } from '../../lib/api';
 
 type ClientComplete = Client & {
@@ -16,23 +15,13 @@ type ClientPageProps = {
 };
 
 const ClientPage = ({ client }: ClientPageProps) => {
-  
+
   if (!client) return <p>Client not found.</p>;
-  
-  const clientBirthDate = new Date(client.birthDate).toLocaleDateString('pt-BR');
 
   return (
     <ContainerBasic>
       <Header />
-      <div>
-        <p>{client.name}</p>
-        <p>{clientBirthDate}</p>
-        <p>{client.description}</p>
-      </div>
-      <Link href={`/client/${client.id}/edit`}>
-        <button type="button">Editar</button>
-      </Link>
-      <TableClientPackages clientId={client.id} clientPackages={client.packages} />
+      <TabClient client={client} />
     </ContainerBasic>
   );
 };
