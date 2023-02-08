@@ -17,7 +17,7 @@ export const CardClient = ({ client }: CardClientProps) => {
         flexDir="column"
         p="8px 16px"
         bgColor="#F1D7FF94"
-        width="400px"
+        width="350px"
         height="250px"
         fontFamily="Poppins"
         color="#734A91"
