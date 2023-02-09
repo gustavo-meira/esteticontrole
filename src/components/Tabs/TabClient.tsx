@@ -25,8 +25,8 @@ export const TabClient = ({ client }: TabClientProps) => (
 
       <TabPanels>
         <TabPanel p="0"><PanelClient client={client} /></TabPanel>
-        <TabPanel><PanelMeasures measures={client.measures} /></TabPanel>
-        <TabPanel><TableClientPackages clientId={client.id} clientPackages={client.packages} /></TabPanel>
+        <TabPanel p="0"><PanelMeasures measures={client.measures} /></TabPanel>
+        <TabPanel p="0"><TableClientPackages clientId={client.id} clientPackages={client.packages} /></TabPanel>
       </TabPanels>
     </Tabs>
   </>
