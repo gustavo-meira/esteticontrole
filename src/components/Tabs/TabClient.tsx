@@ -1,4 +1,4 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { Client, Measures, Package } from '@prisma/client';
 import { PanelClient } from '../Panels/PanelClient';
 import { PanelMeasures } from '../Panels/PanelMeasures';
@@ -12,17 +12,22 @@ type TabClientProps = {
 };
 
 export const TabClient = ({ client }: TabClientProps) => (
-  <Tabs>
-    <TabList>
-      <Tab>Informações gerais</Tab>
-      <Tab>Medidas</Tab>
-      <Tab>Pacotes</Tab>
-    </TabList>
+  <>
+    <Heading textAlign="center" m="2">
+      {client.name}
+    </Heading>
+    <Tabs>
+      <TabList>
+        <Tab>Informações gerais</Tab>
+        <Tab>Medidas</Tab>
+        <Tab>Pacotes</Tab>
+      </TabList>
 
-    <TabPanels>
-      <TabPanel><PanelClient client={client} /></TabPanel>
-      <TabPanel><PanelMeasures measures={client.measures} /></TabPanel>
-      <TabPanel><TableClientPackages clientId={client.id} clientPackages={client.packages} /></TabPanel>
-    </TabPanels>
-  </Tabs>
+      <TabPanels>
+        <TabPanel p="0"><PanelClient client={client} /></TabPanel>
+        <TabPanel><PanelMeasures measures={client.measures} /></TabPanel>
+        <TabPanel><TableClientPackages clientId={client.id} clientPackages={client.packages} /></TabPanel>
+      </TabPanels>
+    </Tabs>
+  </>
 );
