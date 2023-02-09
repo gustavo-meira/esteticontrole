@@ -66,7 +66,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
         Adicionar Nova Linha
       </ButtonPrimary>
       <TableContainer fontFamily="Poppins">
-        <Table variant="striped" colorScheme="purple">
+        <Table colorScheme="purple">
           <Thead>
             <Tr>
               <Th>Data</Th>
@@ -78,13 +78,14 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
           </Thead>
           <Tbody>
             {
-              clientPackages.map((clientPackage) => (
+              clientPackages.map((clientPackage, index) => (
                 <RowClientPackage
                   key={clientPackage.id}
                   clientPackage={clientPackage}
                   onChangePaidStatus={onChangePaidStatus}
                   onDelete={onDeleteAPackage}
                   onEditing={onSaveAPackage}
+                  bgColor={index % 2 === 0 ? '#F1D7FF96' : 'white'}
                 />
               ))
             }

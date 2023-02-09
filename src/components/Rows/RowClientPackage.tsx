@@ -9,9 +9,10 @@ type RowClientPackageProps = {
   onChangePaidStatus: (packageId: string, value: boolean) => void;
   onDelete: (packageId: string) => void;
   onEditing: (clientPackage: Package) => Promise<void>;
+  bgColor?: string;
 };
 
-export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, onEditing }: RowClientPackageProps) => {
+export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, onEditing, bgColor }: RowClientPackageProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const packageDate = clientPackage?.date ? new Date(clientPackage.date) : null;
@@ -44,7 +45,7 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
 
   if (isEditing) {
     return (
-      <Tr height="53px">
+      <Tr bgColor={bgColor} height="53px">
         <Td><Input bgColor="white" onChange={(e) => setDateEdit(e.target.value)} value={dateEdit} type="date" /></Td>
         <Td><Input bgColor="white" onChange={(e) => setTreatmentEdit(e.target.value)} value={treatmentEdit || ''} type="text" /></Td>
         <Td><Input bgColor="white" onChange={(e) => setValueEdit(e.target.value)} value={valueEdit} type="number" step=".01" /></Td>
@@ -70,7 +71,7 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
   }
 
   return (
-    <Tr height="4" onDoubleClick={() => setIsEditing(true)}>
+    <Tr bgColor={bgColor} height="4" onDoubleClick={() => setIsEditing(true)}>
       <Td>{packageDateAsString}</Td>
       <Td>{clientPackage.treatment}</Td>
       <Td isNumeric>{clientPackage.value}</Td>
