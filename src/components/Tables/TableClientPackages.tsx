@@ -59,9 +59,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
     <>
       <ButtonPrimary
         onClick={onCreateNewRow}
-        alignSelf="flex-end"
-        mr="12"
-        mb="4"
+        m="4"
       >
         Adicionar Nova Linha
       </ButtonPrimary>
