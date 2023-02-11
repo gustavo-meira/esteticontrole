@@ -25,7 +25,7 @@ model Measures {
   weight       Float?
 
   client   Client @relation(fields: [clientId], references: [id])
-  clientId String @unique
+  clientId String
 }
 
 model Client {
