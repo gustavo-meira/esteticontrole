@@ -10,17 +10,18 @@ datasource db {
 model Measures {
   id String @id @default(cuid())
 
-  rightArm   Float?
-  leftArm    Float?
-  chest      Float?
-  waist      Float?
-  hips       Float?
-  butt       Float?
-  rightThigh Float?
-  leftThigh  Float?
-  rightCalf  Float?
-  leftCalf   Float?
-  height     Float?
+  measuredDate DateTime @default(now())
+  rightArm     Float?
+  leftArm      Float?
+  chest        Float?
+  waist        Float?
+  hips         Float?
+  butt         Float?
+  rightThigh   Float?
+  leftThigh    Float?
+  rightCalf    Float?
+  leftCalf     Float?
+  height       Float?
 
   client   Client @relation(fields: [clientId], references: [id])
   clientId String @unique
@@ -34,7 +35,7 @@ model Client {
   drink             Boolean
   smoke             Boolean
   children          Int?
-  sleep             String // Bom - Médio - Ruim
+  sleep             String
   feeding           String
   drinkWater        Float
   intestine         String
@@ -48,7 +49,7 @@ model Client {
   startingWeight    Float?
   description       String?
 
-  measures Measures?
+  measures Measures[]
   packages Package[]
 }
 
@@ -58,7 +59,7 @@ model Package {
   date      DateTime?
   treatment String?
   value     Float?
-  paid      Boolean @default(false)
+  paid      Boolean   @default(false)
 
   client   Client @relation(fields: [clientId], references: [id])
   clientId String
