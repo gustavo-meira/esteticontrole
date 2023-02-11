@@ -22,6 +22,7 @@ model Measures {
   rightCalf    Float?
   leftCalf     Float?
   height       Float?
+  weight       Float?
 
   client   Client @relation(fields: [clientId], references: [id])
   clientId String @unique
@@ -46,7 +47,6 @@ model Client {
   mentalHealth      String?
   otherTreatments   String?
   indication        String?
-  startingWeight    Float?
   description       String?
 
   measures Measures[]
