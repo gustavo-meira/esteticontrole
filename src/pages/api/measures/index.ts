@@ -18,6 +18,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const measuresToCreateSchema = z.object({
       clientId: z.string().cuid(),
+      measuredDate: z.string().transform((value) => new Date(value)).optional(),
       rightArm: measureStringToNumberOrNullSchema,
       leftArm: measureStringToNumberOrNullSchema,
       chest: measureStringToNumberOrNullSchema,
