@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const createMeasuresSchema = z.object({
+  measuredDate: z.string(),
   rightArm: z.string().optional(),
   leftArm: z.string().optional(),
   chest: z.string().optional(),
