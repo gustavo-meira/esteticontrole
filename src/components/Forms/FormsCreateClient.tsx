@@ -4,14 +4,14 @@ import { z } from 'zod';
 import { createClientSchema } from '../../schemas/createClientFormsSchema';
 import { useRouter } from 'next/router';
 import { api } from '../../lib/api';
-import { Client, Measures } from '@prisma/client';
+import { Client } from '@prisma/client';
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Textarea } from '@chakra-ui/react';
 import { serializeClientToForms } from '../../utils/serializeClientToForms';
 
 type CreateClientSchema = z.infer<typeof createClientSchema>;
 
 type FormsCreateClientProps = {
-  client?: Client & { measures: Measures };
+  client?: Client;
 };
 
 export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
@@ -158,66 +158,6 @@ export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
             <Input borderRadius="7px" bgColor="#F1D7FF99" type="text" id="indication" {...register('indication')}/>
           </Box>
         </Flex>
-        <Flex
-          gap="5"
-        >
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="rightArm">Braço dir.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="rightArm" {...register('measures.rightArm')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="leftArm">Braço esq.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftArm" {...register('measures.leftArm')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="chest">Peito</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="chest" {...register('measures.chest')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="waist">Cintura</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="waist" {...register('measures.waist')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="hips">Ancas</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="hips" {...register('measures.hips')}/>
-          </Box>
-        </Flex>
-        <Flex
-          gap="5"
-        >
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="butt">Bumbum</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="butt" {...register('measures.butt')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="rightThigh">Coxa dir.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="rightThigh" {...register('measures.rightThigh')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="leftThigh">Coxa esq.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftThigh" {...register('measures.leftThigh')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="rightCalf">Batata dir.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="rightCalf" {...register('measures.rightCalf')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="leftCalf">Batata esq.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftCalf" {...register('measures.leftCalf')}/>
-          </Box>
-        </Flex>
-        <Flex
-          gap="5"
-        >
-          <Box width="calc(20% - 16px)">
-            <FormLabel fontSize="lg" htmlFor="height">Altura</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="height" {...register('measures.height')}/>
-          </Box>
-          <Box width="calc(20% - 16px)">
-            <FormLabel fontSize="lg" htmlFor="startingWeight">Peso Inicial</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="startingWeight" {...register('startingWeight')}/>
-          </Box>
-        </Flex>
         <Box>
           <FormLabel fontSize="lg" htmlFor="description">Descrição</FormLabel>
           <Textarea borderRadius="7px" bgColor="#F1D7FF99" id="description" cols={30} rows={10} {...register('description')}></Textarea>
@@ -234,7 +174,7 @@ export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
             mt="2"
             colorScheme="purple"
           >
-            Cadastrar
+            { client ? 'Editar' : 'Cadastrar' }
           </Button>
         </Flex>
       </FormControl>
