@@ -137,7 +137,7 @@ export const PanelClient = ({ client }: PanelClientProps) => (
       <Divider orientation="vertical" />
       <RowClientInfo
         icon={<Scales />}
-        info={client.startingWeight?.toString() || 'Não possui informação'}
+        info={'Não possui informação'}
         infoName="Peso Inicial"
       />
     </Flex>
