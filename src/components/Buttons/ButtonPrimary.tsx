@@ -9,6 +9,7 @@ export const ButtonPrimary = ({ children, ...rest }: ButtonProps) => (
     color="#FFFFFF"
     colorScheme="purple"
     fontFamily="Poppins"
+    fontWeight="normal"
     {...rest}
   >
     {children}

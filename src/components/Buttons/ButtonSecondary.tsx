@@ -9,6 +9,7 @@ export const ButtonSecondary = ({ children, ...rest }: ButtonProps) => (
     color="#A87BC7"
     colorScheme="whiteAlpha"
     fontFamily="Poppins"
+    fontWeight="normal"
     {...rest}
   >
     {children}
