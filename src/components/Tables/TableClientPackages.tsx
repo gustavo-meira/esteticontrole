@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { api } from '../../lib/api';
 import { sortPackages } from '../../utils/sortPackages';
 import { RowClientPackage } from '../Rows/RowClientPackage';
-import { changeEditedPackageToArray } from '../../utils/changeEditedPackageToArray';
+import { changeEditedItemToArray } from '../../utils/changeEditedItemToArray';
 import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 
@@ -32,7 +32,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
       paid: value,
     });
 
-    setClientPackages(changeEditedPackageToArray(clientPackages, packageEdited.data));
+    setClientPackages(changeEditedItemToArray(clientPackages, packageEdited.data));
   };
 
   const onDeleteAPackage = async (packageId: string) => {
@@ -51,7 +51,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
     });
 
     setClientPackages(
-      changeEditedPackageToArray(clientPackages, savedPackageApi.data).sort(sortPackages)
+      changeEditedItemToArray(clientPackages, savedPackageApi.data).sort(sortPackages)
     );
   };
 
