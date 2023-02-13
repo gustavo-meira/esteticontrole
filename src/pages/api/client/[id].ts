@@ -49,21 +49,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       mentalHealth: z.string().optional(),
       otherTreatments: z.string().optional(),
       indication: z.string().optional(),
-      startingWeight: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
       description: z.string().optional(),
-      measures: z.object({
-        rightArm: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        leftArm: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        chest: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        waist: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        hips: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        butt: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        rightThigh: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        leftThigh: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        rightCalf: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        leftCalf: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-        height: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-      }).optional(),
     });
 
     try {
@@ -74,9 +60,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         data: {
           ...dataParsed,
-          measures: {
-            update: dataParsed.measures,
-          },
         },
         include: {
           measures: true,
