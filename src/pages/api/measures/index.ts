@@ -16,9 +16,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       .transform((num) => num === 0 ? null : num)
       .optional();
 
+      
     const measuresToCreateSchema = z.object({
       clientId: z.string().cuid(),
-      measuredDate: z.string().transform((value) => new Date(value)).optional(),
+      measuredDate: z.string()
+        .transform((value) => new Date(value))
+        .refine((date) => date.setDate(date.getDate() + 1))
+        .optional(),
       rightArm: measureStringToNumberOrNullSchema,
       leftArm: measureStringToNumberOrNullSchema,
       chest: measureStringToNumberOrNullSchema,
@@ -32,8 +36,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       height: measureStringToNumberOrNullSchema,
       weight: measureStringToNumberOrNullSchema,
     });
-
-    try {
+    
+    try {  
       const measuresToCreate = measuresToCreateSchema.parse(req.body);
 
       const measureCreated = await prisma.measures.create({
