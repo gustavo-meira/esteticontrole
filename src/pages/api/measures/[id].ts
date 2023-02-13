@@ -58,6 +58,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.status(500).send({});
     }
   }
+
+  if (req.method === 'DELETE') {
+    const idToDeleteSchema = z.string().cuid();
+
+    try {
+      const idToDelete = idToDeleteSchema.parse(req.query.id);
+
+      const measuresDeleted = await prisma.measures.delete({
+        where: {
+          id: idToDelete,
+        },
+      });
+
+      res.status(200).json(measuresDeleted);
+    } catch (err) {
+      if (err instanceof ZodError) {
+        res.status(400).json({ message: err.message });
+      }
+
+      res.status(500).send({});
+    }
+  }
 };
 
 export default handler;
