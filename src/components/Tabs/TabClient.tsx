@@ -8,7 +8,7 @@ import { TableClientPackages } from '../Tables/TableClientPackages';
 
 type TabClientProps = {
   client: Client & {
-    measures?: Measures;
+    measures: Measures[];
     packages: Package[];
   };
 };
@@ -35,7 +35,7 @@ export const TabClient = ({ client }: TabClientProps) => (
 
       <TabPanels>
         <TabPanel p="0"><PanelClient client={client} /></TabPanel>
-        <TabPanel p="0"><PanelMeasures measures={client.measures} /></TabPanel>
+        <TabPanel p="0"><PanelMeasures clientId={client.id} measures={client.measures} /></TabPanel>
         <TabPanel p="0"><TableClientPackages clientId={client.id} clientPackages={client.packages} /></TabPanel>
       </TabPanels>
     </Tabs>
