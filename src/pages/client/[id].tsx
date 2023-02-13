@@ -6,7 +6,7 @@ import { TabClient } from '../../components/Tabs/TabClient';
 import { api } from '../../lib/api';
 
 type ClientComplete = Client & {
-  measures?: Measures;
+  measures: Measures[];
   packages: Package[];
 };
 
