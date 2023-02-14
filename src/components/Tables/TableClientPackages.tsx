@@ -6,6 +6,7 @@ import { RowClientPackage } from '../Rows/RowClientPackage';
 import { changeEditedItemToArray } from '../../utils/changeEditedItemToArray';
 import { Table, TableContainer, Tbody, Th, Thead, Tr } from '@chakra-ui/react';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
+import { useAutoAnimate } from '@formkit/auto-animate/react';
 
 type TableClientPackagesProps = {
   clientPackages: Package[];
@@ -14,6 +15,9 @@ type TableClientPackagesProps = {
 
 export const TableClientPackages = (props: TableClientPackagesProps) => {
   const [clientPackages, setClientPackages] = useState<Package[]>(props.clientPackages.sort(sortPackages));
+  const [animationParent] = useAutoAnimate({
+    duration: 250,
+  });
 
   const onCreateNewRow = async () => {
     const currentUrl = document.location.origin;
@@ -74,7 +78,7 @@ export const TableClientPackages = (props: TableClientPackagesProps) => {
               <Th>Salvar/Deletar</Th>
             </Tr>
           </Thead>
-          <Tbody>
+          <Tbody ref={animationParent}>
             {
               clientPackages.map((clientPackage, index) => (
                 <RowClientPackage
