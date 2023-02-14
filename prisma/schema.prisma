@@ -13,14 +13,14 @@ model Measures {
   measuredDate DateTime @default(now())
   rightArm     Float?
   leftArm      Float?
-  chest        Float?
+  upperAbdomen Float?
+  lowerAbdomen Float?
   waist        Float?
-  hips         Float?
   butt         Float?
   rightThigh   Float?
   leftThigh    Float?
-  rightCalf    Float?
-  leftCalf     Float?
+  rightKnee    Float?
+  leftKnee     Float?
   height       Float?
   weight       Float?
 
