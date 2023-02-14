@@ -118,6 +118,10 @@ export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
               <option value="Ruim">Ruim</option>
             </Select>
           </Box>
+          <Box width="calc(20% - 16px)">
+            <FormLabel fontSize="lg" htmlFor="profession">Profissão</FormLabel>
+            <Input borderRadius="7px" bgColor="#F1D7FF99" type="text" id="profession" {...register('profession')}/>
+          </Box>
           <Box flexGrow="1">
             <FormLabel fontSize="lg" htmlFor="surgeries">Cirurgias</FormLabel>
             <Input borderRadius="7px" bgColor="#F1D7FF99" type="text" id="surgeries" {...register('surgeries')}/>
