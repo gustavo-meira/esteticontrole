@@ -25,15 +25,15 @@ export const FormsCreateMeasures = ({ measures, onSubmitNewMeasure, onEditNewMea
   const resetForms = () => {
     reset({
       butt: '',
-      chest: '',
+      upperAbdomen: '',
+      lowerAbdomen: '',
       height: '',
-      hips: '',
       leftArm: '',
-      leftCalf: '',
+      leftKnee: '',
       leftThigh: '',
       measuredDate: '',
       rightArm: '',
-      rightCalf: '',
+      rightKnee: '',
       rightThigh: '',
       waist: '',
       weight: '',
@@ -74,16 +74,16 @@ export const FormsCreateMeasures = ({ measures, onSubmitNewMeasure, onEditNewMea
             <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftArm" {...register('leftArm')}/>
           </Box>
           <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="chest">Peito</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="chest" {...register('chest')}/>
+            <FormLabel fontSize="lg" htmlFor="chest">Abdomen sup.</FormLabel>
+            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="chest" {...register('upperAbdomen')}/>
+          </Box>
+          <Box width="20%">
+            <FormLabel fontSize="lg" htmlFor="hips">Abdomen inf.</FormLabel>
+            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="hips" {...register('lowerAbdomen')}/>
           </Box>
           <Box width="20%">
             <FormLabel fontSize="lg" htmlFor="waist">Cintura</FormLabel>
             <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="waist" {...register('waist')}/>
-          </Box>
-          <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="hips">Ancas</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="hips" {...register('hips')}/>
           </Box>
         </Flex>
         <Flex
@@ -102,12 +102,12 @@ export const FormsCreateMeasures = ({ measures, onSubmitNewMeasure, onEditNewMea
             <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftThigh" {...register('leftThigh')}/>
           </Box>
           <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="rightCalf">Batata dir.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="rightCalf" {...register('rightCalf')}/>
+            <FormLabel fontSize="lg" htmlFor="rightCalf">Joelho dir.</FormLabel>
+            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="rightCalf" {...register('rightKnee')}/>
           </Box>
           <Box width="20%">
-            <FormLabel fontSize="lg" htmlFor="leftCalf">Batata esq.</FormLabel>
-            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftCalf" {...register('leftCalf')}/>
+            <FormLabel fontSize="lg" htmlFor="leftCalf">Joelho esq.</FormLabel>
+            <Input borderRadius="7px" bgColor="#F1D7FF99" type="number" step={.01} id="leftCalf" {...register('leftKnee')}/>
           </Box>
         </Flex>
         <Flex
