@@ -48,6 +48,7 @@ model Client {
   otherTreatments   String?
   indication        String?
   description       String?
+  profession        String?
 
   measures Measures[]
   packages Package[]
