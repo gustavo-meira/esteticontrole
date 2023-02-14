@@ -33,13 +33,14 @@ export const ChartClientMeasures = ({ measures }: ChartClientMeasuresProps) => {
         <Legend />
         <Line type="monotone" name="Braço Direito" dataKey="rightArm" stroke="#8b4513" />
         <Line type="monotone" name="Braço Esquerdo" dataKey="leftArm" stroke="#006400" />
-        <Line type="monotone" name="Peito" dataKey="chest" stroke="#4682b4" />
+        <Line type="monotone" name="Abdomen superior" dataKey="upperAbdomen" stroke="#4682b4" />
+        <Line type="monotone" name="Abdomen inferior" dataKey="lowerAbdomen" stroke="#ff0000" />
         <Line type="monotone" name="Cintura" dataKey="waist" stroke="#4b0082" />
-        <Line type="monotone" name="Ancas" dataKey="hips" stroke="#ff0000" />
         <Line type="monotone" name="Bumbum" dataKey="butt" stroke="#00ff7f" />
         <Line type="monotone" name="Coxa Direita" dataKey="rightThigh" stroke="#00ffff" />
         <Line type="monotone" name="Coxa Esquerda" dataKey="leftThigh" stroke="#ff69b4" />
-        <Line type="monotone" name="Batata Direita" dataKey="rightCalf" stroke="#0000ff" />
+        <Line type="monotone" name="Joelho Direito" dataKey="rightKnee" stroke="#0000ff" />
+        <Line type="monotone" name="Joelho Esquerdo" dataKey="leftKnee" stroke="#ffe4c4" />
         <Line type="monotone" name="Peso" dataKey="weight" stroke="#000000" />
       </LineChart>
     </Flex>
