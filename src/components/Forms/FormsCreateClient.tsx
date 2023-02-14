@@ -5,8 +5,9 @@ import { createClientSchema } from '../../schemas/createClientFormsSchema';
 import { useRouter } from 'next/router';
 import { api } from '../../lib/api';
 import { Client } from '@prisma/client';
-import { Box, Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Textarea } from '@chakra-ui/react';
+import { Box, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Textarea } from '@chakra-ui/react';
 import { serializeClientToForms } from '../../utils/serializeClientToForms';
+import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 
 type CreateClientSchema = z.infer<typeof createClientSchema>;
 
@@ -165,17 +166,12 @@ export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
         <Flex
           justifyContent="flex-end"
         >
-          <Button
+          <ButtonPrimary
             type="submit"
-            bgColor="#A87BC7"
-            color="white"
-            fontFamily="Poppins"
-            fontWeight="normal"
             mt="2"
-            colorScheme="purple"
           >
-            { client ? 'Editar' : 'Cadastrar' }
-          </Button>
+            { client ? 'Salvar' : 'Cadastrar' }
+          </ButtonPrimary>
         </Flex>
       </FormControl>
     </form>
