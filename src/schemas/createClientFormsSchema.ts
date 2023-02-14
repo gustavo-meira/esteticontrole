@@ -23,4 +23,5 @@ export const createClientSchema = z.object({
   otherTreatments: z.string().optional(),
   indication: z.string().optional(),
   description: z.string().optional(),
+  profession: z.string().optional(),
 });
