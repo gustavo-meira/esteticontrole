@@ -17,7 +17,7 @@ export const serializeClientToForms = (client?: Client): CreateClientSchema | un
     smoke: client.smoke ? 'true' : 'false',
     children: client.children?.toString(),
     drinkWater: client.drinkWater.toString(),
-    surgeries: client.surgeries ? client.surgeries : undefined,
+    surgeries: client?.surgeries ? client.surgeries : undefined,
     illnesses: client.illnesses ? client.illnesses : undefined,
     medicines: client.medicines ? client.medicines : undefined,
     illnessesInFamily: client.illnessesInFamily ? client.illnessesInFamily : undefined,
@@ -25,5 +25,6 @@ export const serializeClientToForms = (client?: Client): CreateClientSchema | un
     otherTreatments: client.otherTreatments ? client.otherTreatments : undefined,
     indication: client.indication ? client.indication : undefined,
     description: client.description ? client.description : undefined,
+    profession: client.profession ? client.profession : undefined,
   };
 };
