@@ -1,7 +1,6 @@
 import { Flex, Text } from '@chakra-ui/react';
 import { Client } from '@prisma/client';
 import Link from 'next/link';
-import { capitalizeEveryStartLetter } from '../../utils/capitalizeEveryStartLetter';
 
 type CardClientProps = {
   client: Client;
@@ -28,7 +27,7 @@ export const CardClient = ({ client }: CardClientProps) => {
           overflow="hidden"
           whiteSpace="nowrap"
         >
-          {capitalizeEveryStartLetter(client.name)}
+          {client.name}
         </Text>
         <Text
           fontSize="large"
