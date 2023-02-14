@@ -1,6 +1,6 @@
 import { Box, Divider, Flex } from '@chakra-ui/react';
 import { Client } from '@prisma/client';
-import { Baby, Bandaids, Bed, BeerBottle, Brain, Cake, FirstAid, FirstAidKit, ForkKnife, MagicWand, Martini, NotePencil, Pill, Scales, Smiley, Syringe, Toilet } from 'phosphor-react';
+import { Baby, Bandaids, Bed, BeerBottle, Brain, Cake, FirstAid, FirstAidKit, ForkKnife, IdentificationCard, MagicWand, Martini, NotePencil, Pill, Smiley, Syringe, Toilet } from 'phosphor-react';
 import { RowClientInfo } from '../Rows/RowClientInfo';
 
 type PanelClientProps = {
@@ -136,9 +136,9 @@ export const PanelClient = ({ client }: PanelClientProps) => (
       />
       <Divider orientation="vertical" />
       <RowClientInfo
-        icon={<Scales />}
-        info={'Não possui informação'}
-        infoName="Peso Inicial"
+        icon={<IdentificationCard />}
+        info={client.profession || 'Não possui informação'}
+        infoName="Profissão"
       />
     </Flex>
     <Flex mt="2" mb="4" justifyContent="center">
