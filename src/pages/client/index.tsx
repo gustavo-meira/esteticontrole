@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
+import { Box, Flex, Input, InputGroup, InputRightElement } from '@chakra-ui/react';
 import { Client } from '@prisma/client';
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
@@ -9,6 +9,7 @@ import { Header } from '../../components/Miscellaneous/Header';
 import { api } from '../../lib/api';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ContainerBasic } from '../../components/Containers/ContainerBasic';
+import { ButtonPrimary } from '../../components/Buttons/ButtonPrimary';
 
 type ClientPageProps = {
   clients: Client[];
@@ -53,16 +54,9 @@ const ClientPage = ({ clients }: ClientPageProps) => {
           </InputGroup>
         </Flex>
         <Link href="/create-client">
-          <Button
-            type="button"
-            variant="solid"
-            border="2px solid #734A91"
-            bgColor="#734A91"
-            color="#FFFFFF"
-            colorScheme="purple"
+          <ButtonPrimary
             display="flex"
             gap="2"
-            fontFamily="Poppins"
             position="fixed"
             bottom="16"
             right="16"
@@ -70,7 +64,7 @@ const ClientPage = ({ clients }: ClientPageProps) => {
           >
             <PencilSimpleLine />
             Cadastrar
-          </Button>
+          </ButtonPrimary>
         </Link>
         <Flex
           p="30px 60px"
