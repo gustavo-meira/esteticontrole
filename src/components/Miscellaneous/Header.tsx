@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Flex, Image, ListItem, Text, UnorderedList } from '@chakra-ui/react';
+import { useRouter } from 'next/router';
 
 type TextLinkProps = {
   href: string;
@@ -24,9 +25,11 @@ const TextLink = ({href, text, isOnPage}: TextLinkProps) => (
 );
 
 export const Header = () => {
-  const isOnSchedule = document.location.pathname === '/schedule';
-  const isOnClient = document.location.pathname === '/client';
-  const isOnStatistics = document.location.pathname === '/statistics';
+  const { pathname } = useRouter();
+
+  const isOnSchedule = pathname === '/schedule';
+  const isOnClient = pathname === '/client';
+  const isOnStatistics = pathname === '/statistics';
 
   return (
     <Flex
