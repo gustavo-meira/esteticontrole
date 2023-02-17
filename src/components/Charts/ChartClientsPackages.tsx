@@ -1,7 +1,9 @@
+import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { Bar, BarChart, CartesianGrid, Legend, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
 import { api } from '../../lib/api';
 import { addMonthNameToArray } from '../../utils/addMonthNameToArray';
+import { ButtonForwardBackward } from '../Buttons/ButtonForwardBackward';
 
 export const ChartClientsPackages = () => {
   const [possibleYears, setPossibleYears] = useState<number[]>([]);
@@ -40,10 +42,28 @@ export const ChartClientsPackages = () => {
   };
 
   return (
-    <div>
-      <p>{currYear}</p>
-      <button onClick={() => onClickSetCurrYear(currYear - 1)}>{'<'}</button>
-      <button onClick={() => onClickSetCurrYear(currYear + 1)}>{'>'}</button>
+    <Box mt="12" color="#635C66">
+      <Flex
+        alignItems="center"
+        gap="2"
+        justifyContent="space-between"
+        pr="6"
+        pl="20"
+        mb="2"
+      >
+        <Heading
+          fontWeight="normal"
+          textAlign="left"
+          fontSize="3xl"
+        >
+          Pacotes atendidos por ano
+        </Heading>
+        <Box>
+          <ButtonForwardBackward direction="backward" onClick={() => onClickSetCurrYear(currYear - 1)} />
+          <Text display="inline-block" fontSize="lg">{currYear}</Text>
+          <ButtonForwardBackward direction="forward" onClick={() => onClickSetCurrYear(currYear + 1)} />
+        </Box>
+      </Flex>
       <BarChart
         width={800}
         height={300}
@@ -59,9 +79,8 @@ export const ChartClientsPackages = () => {
         <XAxis dataKey="month" />
         <YAxis />
         <Tooltip />
-        <Legend />
         <Bar dataKey="value" name="Pacotes" fill="#8884d8" />
       </BarChart>
-    </div>
+    </Box>
   );
 };
