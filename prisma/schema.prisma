@@ -51,10 +51,10 @@ model Client {
   profession        String?
 
   measures Measures[]
-  packages Package[]
+  services Service[]
 }
 
-model Package {
+model Service {
   id String @id @default(cuid())
 
   date      DateTime?
