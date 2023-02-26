@@ -5,31 +5,31 @@ import { api } from '../../lib/api';
 import { addMonthNameToArray } from '../../utils/addMonthNameToArray';
 import { ButtonForwardBackward } from '../Buttons/ButtonForwardBackward';
 
-export const ChartClientsPackages = () => {
+export const ChartClientsServices = () => {
   const [possibleYears, setPossibleYears] = useState<number[]>([]);
   const [currYear, setCurrYear] = useState<number>(new Date().getFullYear());
-  const [packagesOfTheYear, setPackagesOfTheYear] = useState<number[]>([]);
+  const [servicesOfTheYear, setServicesOfTheYear] = useState<number[]>([]);
 
   const getPossibleYears = async () => {
     const currentUrl = document.location.origin;
-    const { data } = await api.get<{ possibleYears: number[] }>(`${currentUrl}/api/statistics/counter-packages-by-year`);
+    const { data } = await api.get<{ possibleYears: number[] }>(`${currentUrl}/api/statistics/counter-services-by-year`);
 
     setPossibleYears(data.possibleYears);
   };
 
-  const getPackagesOfTheYear = async () => {
+  const getServicesOfTheYear = async () => {
     const currentUrl = document.location.origin;
-    const { data } = await api.get<{ packagesOfTheYear: number[] }>(`${currentUrl}/api/statistics/counter-packages-by-year`, {
+    const { data } = await api.get<{ servicesOfTheYear: number[] }>(`${currentUrl}/api/statistics/counter-services-by-year`, {
       params: {
         year: currYear,
       },
     });
 
-    setPackagesOfTheYear(data.packagesOfTheYear);
+    setServicesOfTheYear(data.servicesOfTheYear);
   };
 
   useEffect(() => {
-    getPackagesOfTheYear();
+    getServicesOfTheYear();
   }, [currYear]);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const ChartClientsPackages = () => {
           textAlign="left"
           fontSize="3xl"
         >
-          Pacotes atendidos por ano
+          Atendimentos por ano
         </Heading>
         <Box>
           <ButtonForwardBackward direction="backward" onClick={() => onClickSetCurrYear(currYear - 1)} />
@@ -67,7 +67,7 @@ export const ChartClientsPackages = () => {
       <BarChart
         width={800}
         height={300}
-        data={addMonthNameToArray<number>(packagesOfTheYear)}
+        data={addMonthNameToArray<number>(servicesOfTheYear)}
         margin={{
           top: 5,
           right: 30,
@@ -79,7 +79,7 @@ export const ChartClientsPackages = () => {
         <XAxis dataKey="month" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey="value" name="Pacotes" fill="#8884d8" />
+        <Bar dataKey="value" name="Atendimentos" fill="#8884d8" />
       </BarChart>
     </Box>
   );
