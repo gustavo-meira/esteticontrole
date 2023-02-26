@@ -1,12 +1,12 @@
 import { Flex, Text } from '@chakra-ui/react';
 import CountUp from 'react-countup';
 
-type InfoClientsPackagesRegisteredProps = {
+type InfoClientsServicesRegisteredProps = {
   numberOfClients: number;
-  numberOfPackages: number;
+  numberOfServices: number;
 };
 
-export const InfoClientsPackagesRegistered = ({ numberOfClients, numberOfPackages }: InfoClientsPackagesRegisteredProps) => (
+export const InfoClientsServicesRegistered = ({ numberOfClients, numberOfServices }: InfoClientsServicesRegisteredProps) => (
   <Flex
     mt="12"
     justifyContent="space-evenly"
@@ -26,11 +26,11 @@ export const InfoClientsPackagesRegistered = ({ numberOfClients, numberOfPackage
     >
       <CountUp
         duration={4}
-        end={numberOfPackages}
+        end={numberOfServices}
         useEasing
       />
       <Text>
-        Pacotes cadastrados
+        Atendimentos cadastrados
       </Text>
     </Flex>
     <Flex 
