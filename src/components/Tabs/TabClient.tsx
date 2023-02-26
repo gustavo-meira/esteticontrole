@@ -1,15 +1,15 @@
 import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Link, Box } from '@chakra-ui/react';
-import { Client, Measures, Package } from '@prisma/client';
+import { Client, Measures, Service } from '@prisma/client';
 import { Pencil } from 'phosphor-react';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { PanelClient } from '../Panels/PanelClient';
 import { PanelMeasures } from '../Panels/PanelMeasures';
-import { TableClientPackages } from '../Tables/TableClientPackages';
+import { TableClientServices } from '../Tables/TableClientServices';
 
 type TabClientProps = {
   client: Client & {
     measures: Measures[];
-    packages: Package[];
+    services: Service[];
   };
 };
 
@@ -30,13 +30,13 @@ export const TabClient = ({ client }: TabClientProps) => (
       <TabList>
         <Tab>Informações gerais</Tab>
         <Tab>Medidas</Tab>
-        <Tab>Pacotes</Tab>
+        <Tab>Atendimentos</Tab>
       </TabList>
 
       <TabPanels>
         <TabPanel p="0"><PanelClient client={client} /></TabPanel>
         <TabPanel p="0"><PanelMeasures clientId={client.id} measures={client.measures} /></TabPanel>
-        <TabPanel p="0"><TableClientPackages clientId={client.id} clientPackages={client.packages} /></TabPanel>
+        <TabPanel p="0"><TableClientServices clientId={client.id} clientServices={client.services} /></TabPanel>
       </TabPanels>
     </Tabs>
   </>
