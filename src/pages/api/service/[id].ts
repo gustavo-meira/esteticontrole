@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'PUT') {
     const id = req.query.id;
 
-    const packageToEditSchema = z.object({
+    const serviceToEditSchema = z.object({
       id: z.string().cuid(),
       clientId: z.string().cuid(),
       date: z.string().datetime().nullish(),
@@ -22,16 +22,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     try {
-      const packageToEdit = packageToEditSchema.parse({ ...req.body, id });
+      const serviceToEdit = serviceToEditSchema.parse({ ...req.body, id });
 
-      const packageEdited = await prisma.package.update({
+      const serviceEdited = await prisma.service.update({
         where: {
-          id: packageToEdit.id,
+          id: serviceToEdit.id,
         },
-        data: packageToEdit,
+        data: serviceToEdit,
       });
   
-      res.status(200).json(packageEdited);
+      res.status(200).json(serviceEdited);
     } catch (err) {
       if (err instanceof ZodError) {
         res.status(400).json({ message: err.message });
@@ -44,24 +44,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'PATCH') {
     const id = req.query.id;
 
-    const packageToEditSchema = z.object({
+    const serviceToEditSchema = z.object({
       id: z.string().cuid(),
       paid: z.boolean(),
     });
 
     try {
-      const packageToEdit = packageToEditSchema.parse({ ...req.body, id });
+      const serviceToEdit = serviceToEditSchema.parse({ ...req.body, id });
 
-      const packageEdited = await prisma.package.update({
+      const serviceEdited = await prisma.service.update({
         where: {
-          id: packageToEdit.id,
+          id: serviceToEdit.id,
         },
         data: {
-          paid: packageToEdit.paid,
+          paid: serviceToEdit.paid,
         },
       });
 
-      res.status(200).json(packageEdited);
+      res.status(200).json(serviceEdited);
     } catch (err) {
       if (err instanceof ZodError) {
         res.status(400).json({ message: err.message });
@@ -74,22 +74,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'DELETE') {
     const id = req.query.id;
     
-    const idPackageToDeleteSchema = z.string({
+    const idServiceToDeleteSchema = z.string({
       invalid_type_error: 'id must be a string',
     }).cuid({
       message: 'id must be a cuid',
     });
 
     try {
-      const idPackageToDelete = idPackageToDeleteSchema.parse(id);
+      const idServiceToDelete = idServiceToDeleteSchema.parse(id);
   
-      const packageDeleted = await prisma.package.delete({
+      const serviceDeleted = await prisma.service.delete({
         where: {
-          id: idPackageToDelete,
+          id: idServiceToDelete,
         },
       });
   
-      res.status(200).json(packageDeleted);
+      res.status(200).json(serviceDeleted);
     } catch (err) {
       if (err instanceof ZodError) {
         res.status(400).json({ message: err.message });

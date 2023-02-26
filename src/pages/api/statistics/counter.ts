@@ -10,12 +10,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<StatisticsCount
   }
 
   if (req.method === 'GET') {
-    const [numberOfPackages, numberOfClients] = await Promise.all([
-      prisma.package.count(),
+    const [numberOfServices, numberOfClients] = await Promise.all([
+      prisma.service.count(),
       prisma.client.count(),
     ]);
 
-    res.status(200).json({ numberOfPackages, numberOfClients });
+    res.status(200).json({ numberOfServices, numberOfClients });
   }
 };
 

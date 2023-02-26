@@ -20,13 +20,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const clientId = clientIdSchema.parse(req.body.clientId);
 
-      const packages = await prisma.package.findMany({
+      const services = await prisma.service.findMany({
         where: {
           clientId,
         },
       });
     
-      res.status(200).json(packages);
+      res.status(200).json(services);
     } catch (err) {
 
       if (err instanceof ZodError) {
@@ -38,7 +38,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'POST') {
-    const packageToCreateSchema = z.object({
+    const serviceToCreateSchema = z.object({
       clientId: z.string({
         required_error: 'clientId is required.',
       }).cuid({
@@ -51,13 +51,13 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     });
 
     try {
-      const packageToCreate = packageToCreateSchema.parse(req.body);
+      const serviceToCreate = serviceToCreateSchema.parse(req.body);
 
-      const packageCreated = await prisma.package.create({
-        data: packageToCreate,
+      const serviceCreated = await prisma.service.create({
+        data: serviceToCreate,
       });
 
-      res.status(201).json(packageCreated);
+      res.status(201).json(serviceCreated);
     } catch (err) {
       if (err instanceof ZodError) {
         res.status(400).json({ message: err.message });

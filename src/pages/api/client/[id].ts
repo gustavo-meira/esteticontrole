@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       include: {
         measures: true,
-        packages: true,
+        services: true,
       },
     });
   
