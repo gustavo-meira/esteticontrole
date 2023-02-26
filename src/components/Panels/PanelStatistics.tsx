@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 import { StatisticsCounterResponse } from '../../types/statistics.server';
-import { ChartClientsPackages } from '../Charts/ChartClientsPackages';
-import { InfoClientsPackagesRegistered } from '../Miscellaneous/InfoClientsPackagesRegistered';
+import { ChartClientsServices } from '../Charts/ChartClientsServices';
+import { InfoClientsServicesRegistered } from '../Miscellaneous/InfoClientsServicesRegistered';
 
 type PanelStatisticsProps = {
   statistics: StatisticsCounterResponse,
@@ -9,10 +9,10 @@ type PanelStatisticsProps = {
 
 export const PanelStatistics = ({ statistics }: PanelStatisticsProps) => (
   <Flex grow="1" justifyContent="space-around">
-    <ChartClientsPackages />
-    <InfoClientsPackagesRegistered
+    <ChartClientsServices />
+    <InfoClientsServicesRegistered
       numberOfClients={statistics.numberOfClients}
-      numberOfPackages={statistics.numberOfPackages}
+      numberOfServices={statistics.numberOfServices}
     />
   </Flex>
 );
