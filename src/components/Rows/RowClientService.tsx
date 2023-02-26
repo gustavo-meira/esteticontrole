@@ -1,28 +1,28 @@
 import { Checkbox, Input, Td, Tr } from '@chakra-ui/react';
-import { Package } from '@prisma/client';
+import { Service } from '@prisma/client';
 import { useState } from 'react';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 
-type RowClientPackageProps = {
-  clientPackage: Package;
-  onChangePaidStatus: (packageId: string, value: boolean) => void;
-  onDelete: (packageId: string) => void;
-  onEditing: (clientPackage: Package) => Promise<void>;
+type RowClientServiceProps = {
+  clientService: Service;
+  onChangePaidStatus: (serviceId: string, value: boolean) => void;
+  onDelete: (serviceId: string) => void;
+  onEditing: (clientService: Service) => Promise<void>;
   bgColor?: string;
 };
 
-export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, onEditing, bgColor }: RowClientPackageProps) => {
+export const RowClientService = ({ clientService, onChangePaidStatus, onDelete, onEditing, bgColor }: RowClientServiceProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
-  const packageDate = clientPackage?.date ? new Date(clientPackage.date) : null;
-  packageDate?.setHours(0);
-  const packageDateAsString = packageDate ? packageDate.toLocaleDateString('pt-BR') : 'A combinar';
+  const serviceDate = clientService?.date ? new Date(clientService.date) : null;
+  serviceDate?.setHours(0);
+  const serviceDateAsString = serviceDate ? serviceDate.toLocaleDateString('pt-BR') : 'A combinar';
 
-  const [dateEdit, setDateEdit] = useState(packageDate?.toISOString().slice(0, 10) || '');
-  const [treatmentEdit, setTreatmentEdit] = useState(clientPackage.treatment || '');
-  const [valueEdit, setValueEdit] = useState(clientPackage.value?.toString() || '');
-  const [paidEdit, setPaidEdit] = useState(clientPackage.paid);
+  const [dateEdit, setDateEdit] = useState(serviceDate?.toISOString().slice(0, 10) || '');
+  const [treatmentEdit, setTreatmentEdit] = useState(clientService.treatment || '');
+  const [valueEdit, setValueEdit] = useState(clientService.value?.toString() || '');
+  const [paidEdit, setPaidEdit] = useState(clientService.paid);
 
   const onSaveClick = async () => {
     const dateToSend = dateEdit !== null ? new Date(dateEdit) : null;
@@ -32,8 +32,8 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
     }
 
     await onEditing({
-      id: clientPackage.id,
-      clientId: clientPackage.clientId,
+      id: clientService.id,
+      clientId: clientService.clientId,
       date: dateToSend,
       paid: paidEdit,
       treatment: treatmentEdit !== '' ? treatmentEdit : null,
@@ -64,7 +64,7 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
           gap="2"
         >
           <ButtonPrimary onClick={onSaveClick}>Salvar</ButtonPrimary>
-          <ButtonSecondary onClick={() => onDelete(clientPackage.id)}>Deletar</ButtonSecondary>
+          <ButtonSecondary onClick={() => onDelete(clientService.id)}>Deletar</ButtonSecondary>
         </Td>
       </Tr>
     );
@@ -72,18 +72,18 @@ export const RowClientPackage = ({ clientPackage, onChangePaidStatus, onDelete, 
 
   return (
     <Tr bgColor={bgColor} height="4" onDoubleClick={() => setIsEditing(true)}>
-      <Td>{packageDateAsString}</Td>
-      <Td>{clientPackage.treatment}</Td>
-      <Td isNumeric>{clientPackage.value}</Td>
+      <Td>{serviceDateAsString}</Td>
+      <Td>{clientService.treatment}</Td>
+      <Td isNumeric>{clientService.value}</Td>
       <Td>
         <Checkbox
-          onChange={() => onChangePaidStatus(clientPackage.id, !clientPackage.paid)}
-          isChecked={clientPackage.paid}
+          onChange={() => onChangePaidStatus(clientService.id, !clientService.paid)}
+          isChecked={clientService.paid}
           colorScheme="purple"
           borderColor="black"
           mr="2"
         >
-          { clientPackage.paid ? 'Pago' : 'Devendo' }
+          { clientService.paid ? 'Pago' : 'Devendo' }
         </Checkbox>
       </Td>
       <Td />
