@@ -1,10 +1,10 @@
 import { Flex } from '@chakra-ui/react';
-import { StatisticsCounterResponse } from '../../types/statistics.server';
+import { CounterResponse } from '../../types/statistics.server';
 import { ChartClientsServices } from '../Charts/ChartClientsServices';
 import { InfoClientsServicesRegistered } from '../Miscellaneous/InfoClientsServicesRegistered';
 
 type PanelStatisticsProps = {
-  statistics: StatisticsCounterResponse,
+  statistics: CounterResponse,
 };
 
 export const PanelStatistics = ({ statistics }: PanelStatisticsProps) => (
