@@ -1,3 +1,9 @@
 import axios from 'axios';
 
-export const api = axios.create();
+const defaultUrl = 'http://localhost:3333';
+
+const baseURL = process?.env?.HOST || document?.location?.origin || defaultUrl;
+
+export const api = axios.create({
+  baseURL,
+});
