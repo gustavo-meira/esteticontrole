@@ -2,32 +2,30 @@ import { GetServerSideProps } from 'next';
 import { ContainerBasic } from '../components/Containers/ContainerBasic';
 import { Header } from '../components/Miscellaneous/Header';
 import { PanelStatistics } from '../components/Panels/PanelStatistics';
-import { api } from '../lib/api';
-import { StatisticsCounterResponse } from '../types/statistics.server';
+import statisticsService from '../services/statistics';
+import { CounterResponse } from '../types/statistics.server';
 
-type StatisticsPageProps = StatisticsCounterResponse;
+type StatisticsPageProps = CounterResponse;
 
-const StatisticsPage = ({ numberOfClients, numberOfPackages }: StatisticsPageProps) => (
+const StatisticsPage = ({ numberOfClients, numberOfServices }: StatisticsPageProps) => (
   <ContainerBasic>
     <Header />
     <PanelStatistics
       statistics={{
         numberOfClients,
-        numberOfPackages,
+        numberOfServices,
       }}
     />
   </ContainerBasic>
 );
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const host = process.env.HOST;
-
-  const { data } = await api.get<StatisticsCounterResponse>(`${host}/api/statistics/counter`);
+  const { numberOfClients, numberOfServices } = await statisticsService.counterClientsAndServices();
 
   return {
     props: {
-      numberOfPackages: data.numberOfPackages,
-      numberOfClients: data.numberOfClients,
+      numberOfServices,
+      numberOfClients,
     },
   };
 };
