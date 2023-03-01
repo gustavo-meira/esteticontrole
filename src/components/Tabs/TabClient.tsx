@@ -1,16 +1,16 @@
 import { Heading, Tab, TabList, TabPanel, TabPanels, Tabs, Link, Box } from '@chakra-ui/react';
-import { Client, Measures, Service } from '@prisma/client';
 import { Pencil } from 'phosphor-react';
+import { ClientWithOptionalProps } from '../../types/client.server';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { PanelClient } from '../Panels/PanelClient';
 import { PanelMeasures } from '../Panels/PanelMeasures';
 import { TableClientServices } from '../Tables/TableClientServices';
 
 type TabClientProps = {
-  client: Client & {
-    measures: Measures[];
-    services: Service[];
-  };
+  client: ClientWithOptionalProps<{
+    measures: true,
+    services: true,
+  }>;
 };
 
 export const TabClient = ({ client }: TabClientProps) => (
