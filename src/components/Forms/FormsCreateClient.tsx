@@ -3,11 +3,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { createClientSchema } from '../../schemas/createClientFormsSchema';
 import { useRouter } from 'next/router';
-import { api } from '../../lib/api';
 import { Client } from '@prisma/client';
 import { Box, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Select, Textarea } from '@chakra-ui/react';
 import { serializeClientToForms } from '../../utils/serializeClientToForms';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
+import clientService from '../../services/client';
 
 type CreateClientSchema = z.infer<typeof createClientSchema>;
 
@@ -23,13 +23,12 @@ export const FormsCreateClient = ({ client }: FormsCreateClientProps) => {
   });
 
   const onSubmit: SubmitHandler<CreateClientSchema> = async (data) => {
-    const currentUrl = document.location.origin;
     if (client) {
-      const receivedClient = await api.put<Client>(`${currentUrl}/api/client/${client.id}`, data);
-      router.push(`/client/${receivedClient.data.id}`);
+      const editedClient = await clientService.update({ ...data, id: client.id });
+      router.push(`/client/${editedClient.id}`);
     } else {
-      const receivedClient = await api.post<Client>(`${currentUrl}/api/client`, data);
-      router.push(`/client/${receivedClient.data.id}`);
+      const createdClient = await clientService.create(data);
+      router.push(`/client/${createdClient.id}`);
     }
   };
 
