@@ -10,3 +10,8 @@ export type ServicesPossibleYearsResponse = {
 export type CounterServicesByYearResponse = {
   servicesOfTheYear: number[];
 };
+
+export type CounterClientsByAgeResponse = {
+  age: number;
+  count: number;
+}[];
