@@ -6,10 +6,10 @@ import { MagnifyingGlass, PencilSimpleLine } from 'phosphor-react';
 import { useState } from 'react';
 import { CardClient } from '../../components/Cards/CardClient';
 import { Header } from '../../components/Miscellaneous/Header';
-import { api } from '../../lib/api';
 import { useAutoAnimate } from '@formkit/auto-animate/react';
 import { ContainerBasic } from '../../components/Containers/ContainerBasic';
 import { ButtonPrimary } from '../../components/Buttons/ButtonPrimary';
+import clientService from '../../services/client';
 
 type ClientPageProps = {
   clients: Client[];
@@ -88,12 +88,11 @@ const ClientPage = ({ clients }: ClientPageProps) => {
 export default ClientPage;
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  const host = process.env.HOST;
-  const clients = await api.get<Client[]>(`${host}/api/client`);
+  const clients = await clientService.getAll();
 
   return {
     props: {
-      clients: clients.data,
+      clients: clients,
     },
   };
 };
