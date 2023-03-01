@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { z } from 'zod';
+import { z, ZodError } from 'zod';
 import { prisma } from '../../../lib/prisma';
 
 const acceptedMethods = ['GET', 'PUT'];
@@ -13,18 +13,39 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (typeof req.query.id !== 'string') {
       return res.status(400).json({ message: 'id must be a string.' });
     }
-  
-    const client = await prisma.client.findFirst({
-      where: {
-        id: req.query.id,
-      },
-      include: {
-        measures: true,
-        services: true,
-      },
+
+    const acceptedParamsSchema = z.object({
+      id: z.string().cuid(),
+      measures: z.string().transform((value) => value === 'true').default('false'),
+      services: z.string().transform((value) => value === 'true').default('false'),
     });
+
+    try {
+      const {
+        id,
+        measures,
+        services,
+      } = acceptedParamsSchema.parse({ ...req.query });
+
+      const client = await prisma.client.findFirst({
+        where: {
+          id,
+        },
+        include: {
+          measures,
+          services,
+        },
+      });
+    
+      res.status(200).json(client);
+    } catch (err) {
+      if (err instanceof ZodError) {
+        res.status(400).json({ message: err.message });
+      }
+
+      res.status(500).send({});
+    }
   
-    res.status(200).json(client);
   }
 
   if (req.method === 'PUT') {
