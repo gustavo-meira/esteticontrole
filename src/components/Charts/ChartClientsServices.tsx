@@ -1,9 +1,9 @@
 import { Box, Flex, Heading, Text } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { Bar, BarChart, CartesianGrid, Tooltip, XAxis, YAxis } from 'recharts';
-import { api } from '../../lib/api';
 import { addMonthNameToArray } from '../../utils/addMonthNameToArray';
 import { ButtonForwardBackward } from '../Buttons/ButtonForwardBackward';
+import statisticsService from '../../services/statistics';
 
 export const ChartClientsServices = () => {
   const [possibleYears, setPossibleYears] = useState<number[]>([]);
@@ -11,21 +11,15 @@ export const ChartClientsServices = () => {
   const [servicesOfTheYear, setServicesOfTheYear] = useState<number[]>([]);
 
   const getPossibleYears = async () => {
-    const currentUrl = document.location.origin;
-    const { data } = await api.get<{ possibleYears: number[] }>(`${currentUrl}/api/statistics/counter-services-by-year`);
+    const possibleYearsApi = await statisticsService.getServicesPossibleYears();
 
-    setPossibleYears(data.possibleYears);
+    setPossibleYears(possibleYearsApi.possibleYears);
   };
 
   const getServicesOfTheYear = async () => {
-    const currentUrl = document.location.origin;
-    const { data } = await api.get<{ servicesOfTheYear: number[] }>(`${currentUrl}/api/statistics/counter-services-by-year`, {
-      params: {
-        year: currYear,
-      },
-    });
+    const servicesOfTheYearApi = await statisticsService.counterServicesByYear(currYear);
 
-    setServicesOfTheYear(data.servicesOfTheYear);
+    setServicesOfTheYear(servicesOfTheYearApi.servicesOfTheYear);
   };
 
   useEffect(() => {
