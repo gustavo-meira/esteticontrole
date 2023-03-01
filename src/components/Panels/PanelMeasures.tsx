@@ -2,8 +2,8 @@ import { Box, useDisclosure } from '@chakra-ui/react';
 import { Measures } from '@prisma/client';
 import { useEffect, useRef, useState } from 'react';
 import { z } from 'zod';
-import { api } from '../../lib/api';
 import { createMeasuresSchema } from '../../schemas/createMeasuresFormsSchema';
+import measuresService from '../../services/measures';
 import { changeEditedItemToArray } from '../../utils/changeEditedItemToArray';
 import { AlertChoseMeasureToEdit } from '../Alerts/AlertChoseMeasureToEdit';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
@@ -34,7 +34,6 @@ export const PanelMeasures = ({ measures, clientId }: PanelMeasuresProps) => {
   }, [currMeasures]);
 
   const onSubmitNewMeasure = async (measures: CreateMeasuresSchema) => {
-    const currentUrl = document.location.origin;
     const dataToSend = { ...measures, clientId };
 
     if (dataToSend.measuredDate === '') {
@@ -43,8 +42,8 @@ export const PanelMeasures = ({ measures, clientId }: PanelMeasuresProps) => {
       dataToSend.measuredDate = dataToSendDate.toString();
     }
 
-    const measureCreated = await api.post<Measures>(`${currentUrl}/api/measures`, dataToSend);
-    setCurrMeasures([...currMeasures, measureCreated.data].sort(sortMeasuresByDate));
+    const measuresCreated = await measuresService.create(dataToSend);
+    setCurrMeasures([...currMeasures, measuresCreated].sort(sortMeasuresByDate));
   };
 
   const onMeasuresToEdit = (measuresId: string) => {
@@ -56,18 +55,18 @@ export const PanelMeasures = ({ measures, clientId }: PanelMeasuresProps) => {
   const onEditAMeasure = async (measures: CreateMeasuresSchema) => {
     if (!measuresToEdit) return;
 
-    const currentUrl = document.location.origin;
-    const dataToSend = { ...measures, clientId };
-    const measuresEdited = await api.put<Measures>(`${currentUrl}/api/measures/${measuresToEdit.id}`, dataToSend);
+    const dataToSend = { ...measures, clientId, id: measuresToEdit.id };
+    const measuresEdited = await measuresService.update(dataToSend);
 
-    setCurrMeasures(changeEditedItemToArray(currMeasures, measuresEdited.data).sort(sortMeasuresByDate));
+    setCurrMeasures(changeEditedItemToArray(currMeasures, measuresEdited).sort(sortMeasuresByDate));
   };
 
   const onDeleteAMeasure = async (measuresId: string) => {
-    const currentUrl = document.location.origin;
     const measuresFounded = currMeasures.find((measure) => measure.id === measuresId);
     if (!measuresFounded) return;
-    await api.delete<Measures>(`${currentUrl}/api/measures/${measuresFounded.id}`);
+
+    await measuresService.deleteOne(measuresId);
+
     setCurrMeasures(currMeasures.filter((measures) => measures.id !== measuresId));
   };
 
