@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { z, ZodError } from 'zod';
+import { clientToCreateOrUpdateSchema } from '../../../api/schemas/ClientSchemas';
 import { prisma } from '../../../lib/prisma';
 
 const acceptedMethods = ['GET', 'PUT'];
@@ -16,8 +17,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     const acceptedParamsSchema = z.object({
       id: z.string().cuid(),
-      measures: z.string().transform((value) => value === 'true').default('false'),
-      services: z.string().transform((value) => value === 'true').default('false'),
+      measures: z.string()
+        .transform((value) => value === 'true')
+        .default('false'),
+      services: z.string()
+        .transform((value) => value === 'true')
+        .default('false'),
     });
 
     try {
@@ -49,33 +54,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   if (req.method === 'PUT') {
-    const id = req.query.id as string;
-
-    const editClientSchema = z.object({
-      name: z.string(),
-      birthDate: z.string()
-        .transform((birthDate) => new Date(birthDate))
-        .refine((date) => date.setDate(date.getDate() + 1)),
-      drink: z.string().transform((value) => value === 'true'),
-      smoke: z.string().transform((value) => value === 'true'),
-      children: z.string().transform((value) => Number(value)).transform((num) => num === 0 ? null : num).optional(),
-      sleep: z.enum(['Bom', 'Ruim', 'Regular']),
-      feeding: z.enum(['Bom', 'Ruim', 'Regular']),
-      drinkWater: z.string().transform((value) => Number(value)),
-      intestine: z.enum(['Bom', 'Ruim', 'Regular']),
-      surgeries: z.string().optional(),
-      illnesses: z.string().optional(),
-      medicines: z.string().optional(),
-      illnessesInFamily: z.string().optional(),
-      mentalHealth: z.string().optional(),
-      otherTreatments: z.string().optional(),
-      indication: z.string().optional(),
-      description: z.string().optional(),
-      profession: z.string().optional(),
-    });
-
     try {
-      const dataParsed = editClientSchema.parse(req.body);
+      const idSchema = z.string().cuid();
+      const id = idSchema.parse(req.query.id);
+      const dataParsed = clientToCreateOrUpdateSchema.parse(req.body);
       const clientUpdated = await prisma.client.update({
         where: {
           id,
