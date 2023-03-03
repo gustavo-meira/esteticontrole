@@ -52,6 +52,9 @@ model Client {
 
   measures Measures[]
   services Service[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Service {
