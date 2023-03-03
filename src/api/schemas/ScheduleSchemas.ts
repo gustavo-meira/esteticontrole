@@ -18,3 +18,17 @@ export const scheduleToCreateOrUpdateSchema = z.object({
     }),
   duration: z.number(),
 });
+
+export const scheduleByWeekSchema = z.object({
+  startWeekBy: z.string()
+    .transform((date) => {
+      const startWeekBy = new Date();
+      const [year, month, day] = date.split('-');
+
+      startWeekBy.setFullYear(Number(year), Number(month) - 1, Number(day));
+      startWeekBy.setHours(0, 0, 0, 0);
+
+      return startWeekBy;
+    })
+    .default(() => new Date().toISOString().slice(0, 10)),
+});
