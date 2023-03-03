@@ -1,22 +1,27 @@
 import { Schedule } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import scheduleServices from '../../services/schedule';
+import { ButtonForwardBackward } from '../Buttons/ButtonForwardBackward';
 import { ListSchedulesOfADay } from '../Lists/ListSchedulesOfADay';
 
 export const PanelSchedules = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [currWeek, setCurrWeek] = useState(new Date().toISOString().slice(0, 10));
 
   useEffect(() => {
     const getSchedulesThisWeek = async () => {
-      const schedulesFromApi = await scheduleServices.getAWeek();
+      const schedulesFromApi = await scheduleServices.getAWeek(currWeek);
 
       setSchedules(schedulesFromApi);
     };
 
     getSchedulesThisWeek();
-  }, []);
+  }, [currWeek]);
 
+  const [currYear, currMonth, currDay] = currWeek.split('-');
   const firstDate = new Date();
+
+  firstDate.setFullYear(Number(currYear), Number(currMonth) - 1, Number(currDay));
 
   const secondDate = new Date(firstDate);
   const thirdDate = new Date(firstDate);
@@ -29,9 +34,20 @@ export const PanelSchedules = () => {
   fourthDate.setDate(firstDate.getDate() + 3);
   fifthDate.setDate(firstDate.getDate() + 4);
   sixthDate.setDate(firstDate.getDate() + 5);
+  
+  const moveDateBackwardsOrForwards = (direction: 'backward' | 'forward') => {
+    if (direction === 'backward') firstDate.setDate(firstDate.getDate() - 1);
+    else if (direction === 'forward') firstDate.setDate(firstDate.getDate() + 1);
+
+    setCurrWeek(firstDate.toISOString().slice(0, 10));
+  };
 
   return (
     <div>
+      <ButtonForwardBackward
+        direction="backward"
+        onClick={() => moveDateBackwardsOrForwards('backward')}
+      />
       <ListSchedulesOfADay
         date={firstDate}
         schedules={schedules.filter((schedule) => schedule.startDate.getDate() === firstDate.getDate())}
@@ -55,6 +71,10 @@ export const PanelSchedules = () => {
       <ListSchedulesOfADay
         date={sixthDate}
         schedules={schedules.filter((schedule) => schedule.startDate.getDate() === sixthDate.getDate())}
+      />
+      <ButtonForwardBackward
+        direction="forward"
+        onClick={() => moveDateBackwardsOrForwards('forward')}
       />
     </div>
   );
