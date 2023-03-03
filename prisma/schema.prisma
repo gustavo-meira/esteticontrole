@@ -54,7 +54,7 @@ model Client {
   services Service[]
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Service {
@@ -67,4 +67,14 @@ model Service {
 
   client   Client @relation(fields: [clientId], references: [id])
   clientId String
+}
+
+model Schedule {
+  id String @id @default(cuid())
+
+  clientName String
+  treatment  String?
+  notes      String?
+  startDate  DateTime
+  endDate    DateTime
 }
