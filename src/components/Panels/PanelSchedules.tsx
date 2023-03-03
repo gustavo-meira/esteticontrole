@@ -48,6 +48,14 @@ export const PanelSchedules = () => {
         direction="backward"
         onClick={() => moveDateBackwardsOrForwards('backward')}
       />
+      <input
+        type="date"
+        value={currWeek}
+        onChange={(e) => {
+          const [year] = e.target.value.split('-');
+          if (Number(year) > 2000) setCurrWeek(e.target.value);
+        }}
+      />
       <ListSchedulesOfADay
         date={firstDate}
         schedules={schedules.filter((schedule) => schedule.startDate.getDate() === firstDate.getDate())}
