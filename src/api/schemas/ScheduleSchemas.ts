@@ -16,7 +16,9 @@ export const scheduleToCreateOrUpdateSchema = z.object({
 
       return initialDate;
     }),
-  duration: z.number(),
+  duration: z.string()
+    .regex(/^\d{2,3}$/)
+    .transform((value) => Number(value)),
 });
 
 export const scheduleByWeekSchema = z.object({
