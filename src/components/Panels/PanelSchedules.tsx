@@ -1,22 +1,26 @@
+import { useDisclosure } from '@chakra-ui/react';
 import { Schedule } from '@prisma/client';
 import { useEffect, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import scheduleServices from '../../services/schedule';
+import { AlertCreateSchedule } from '../Alerts/AlertCreateSchedule';
 import { ButtonForwardBackward } from '../Buttons/ButtonForwardBackward';
+import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { ListSchedulesOfADay } from '../Lists/ListSchedulesOfADay';
 
 export const PanelSchedules = () => {
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [currWeek, setCurrWeek] = useState(new Date().toISOString().slice(0, 10));
+  const { data: schedules, refetch } = useQuery<Schedule[]>(['schedules'],
+    () => scheduleServices.getAWeek(currWeek),
+    { refetchOnWindowFocus: false }
+  );
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
-    const getSchedulesThisWeek = async () => {
-      const schedulesFromApi = await scheduleServices.getAWeek(currWeek);
-
-      setSchedules(schedulesFromApi);
-    };
-
-    getSchedulesThisWeek();
+    refetch();
   }, [currWeek]);
+
+  if (!schedules) return null;
 
   const [currYear, currMonth, currDay] = currWeek.split('-');
   const firstDate = new Date();
@@ -83,6 +87,15 @@ export const PanelSchedules = () => {
       <ButtonForwardBackward
         direction="forward"
         onClick={() => moveDateBackwardsOrForwards('forward')}
+      />
+      <ButtonPrimary
+        onClick={onOpen}
+      >
+        Agendar
+      </ButtonPrimary>
+      <AlertCreateSchedule
+        isOpen={isOpen}
+        onClose={onClose}
       />
     </div>
   );
