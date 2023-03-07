@@ -58,7 +58,7 @@ const handler: NextApiHandler = async (req, res) => {
       res.status(200).json(scheduleCreated);
     } catch (err) {
       if (err instanceof ZodError) {
-        res.status(400).json({ message: err.message });
+        return res.status(400).json({ message: err.message });
       }
 
       res.status(500).send({});
