@@ -46,14 +46,14 @@ export const FormsCreateSchedule = ({ onFinish }: FormsCreateScheduleProps) => {
         <option value="30">30 minutos</option>
         <option value="45">45 minutos</option>
         <option value="60">1 hora</option>
-        <option value="95">1 hora 15 minutos</option>
-        <option value="110">1 hora 30 minutos</option>
-        <option value="125">1 hora 45 minutos</option>
-        <option value="140">2 horas</option>
-        <option value="155">2 horas 15 minutos</option>
-        <option value="170">2 horas 30 minutos</option>
-        <option value="185">2 horas 45 minutos</option>
-        <option value="200">3 horas</option>
+        <option value="75">1 hora 15 minutos</option>
+        <option value="90">1 hora 30 minutos</option>
+        <option value="105">1 hora 45 minutos</option>
+        <option value="120">2 horas</option>
+        <option value="135">2 horas 15 minutos</option>
+        <option value="150">2 horas 30 minutos</option>
+        <option value="165">2 horas 45 minutos</option>
+        <option value="180">3 horas</option>
       </select>
       { errors.duration && <p>{errors.duration.message}</p> }
       <textarea {...register('notes')} placeholder="Notas*" />
