@@ -1,6 +1,7 @@
 import { NextApiHandler } from 'next';
 import { ZodError } from 'zod';
 import { scheduleToCreateOrUpdateSchema } from '../../../api/schemas/ScheduleSchemas';
+import { checkScheduleConflicts } from '../../../api/utils/checkScheduleConflicts';
 import { prisma } from '../../../lib/prisma';
 
 const acceptedMethods = ['POST'];
@@ -24,24 +25,7 @@ const handler: NextApiHandler = async (req, res) => {
     
       endDate.setMinutes(startDate.getMinutes() + duration);
 
-      const scheduleConflict = await prisma.schedule.findFirst({
-        where: {
-          OR: [
-            {
-              startDate: {
-                lte: endDate,
-                gte: startDate,
-              },
-            },
-            {
-              endDate: {
-                lte: endDate,
-                gte: startDate,
-              },
-            },
-          ],
-        },
-      });
+      const scheduleConflict = await checkScheduleConflicts(startDate, endDate);
 
       if (scheduleConflict) return res.status(409).send({ message: 'You already have a schedule on this hour.' });
 
