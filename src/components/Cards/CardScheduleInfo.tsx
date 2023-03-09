@@ -1,4 +1,6 @@
+import { Box, Text } from '@chakra-ui/react';
 import { Schedule } from '@prisma/client';
+import { Clock, FirstAid, NotePencil, User } from 'phosphor-react';
 import { getHourAndMinutesFromDate } from '../../utils/getHourAndMinutesFromDate';
 
 type CardScheduleInfoProps = {
@@ -14,10 +16,22 @@ export const CardScheduleInfo = ({ schedule }: CardScheduleInfoProps) => {
   const scheduleDurationInMin = scheduleDurationInSec / 60;
 
   return (
-    <div>
-      <h3>{schedule.clientName}</h3>
-      <p>{schedule.treatment || 'Tratamento não informado.'}</p>
-      <p>{`${scheduleStartHour} ~ ${scheduleEndHour} - Duração ${scheduleDurationInMin} minutos.`}</p>
-      <p>{schedule.notes || 'Nenhuma nota definida.'}</p>
-    </div>
+    <Box>
+      <Text display="flex" gap="2" alignItems="center">
+        <User />
+        Cliente: {schedule.clientName}
+      </Text>
+      <Text display="flex" gap="2" alignItems="center">
+        <FirstAid />
+        Tratamento: {schedule.treatment || 'Tratamento não informado.'}
+      </Text>
+      <Text display="flex" gap="2" alignItems="center">
+        <Clock />
+        Duração: {`${scheduleStartHour} ~ ${scheduleEndHour} - Duração ${scheduleDurationInMin} minutos.`}
+      </Text>
+      <Text display="flex" gap="2" alignItems="center">
+        <NotePencil />
+        Notas: {schedule.notes || 'Nenhuma nota definida.'}
+      </Text>
+    </Box>
   );};
