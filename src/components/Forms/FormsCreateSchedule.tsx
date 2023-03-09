@@ -5,27 +5,34 @@ import { useQueryClient } from '@tanstack/react-query';
 import { z } from 'zod';
 import { createScheduleFormsSchema } from '../../schemas/schedule.schemas';
 import scheduleServices from '../../services/schedule';
+import { Schedule } from '@prisma/client';
+import { serializeScheduleToForms } from '../../utils/serializeScheduleToForms';
 
 type CreateScheduleFormsSchema = z.infer<typeof createScheduleFormsSchema>;
 
 type FormsCreateScheduleProps = {
   onFinish: () => void;
+  schedule?: Schedule;
 };
 
-export const FormsCreateSchedule = ({ onFinish }: FormsCreateScheduleProps) => {
+export const FormsCreateSchedule = ({ onFinish, schedule }: FormsCreateScheduleProps) => {
   const { register, handleSubmit, formState: { errors }, setError } = useForm<CreateScheduleFormsSchema>({
     resolver: zodResolver(createScheduleFormsSchema),
+    values: serializeScheduleToForms(schedule),
   });
   const queryClient = useQueryClient();
 
   const onSubmit: SubmitHandler<CreateScheduleFormsSchema> = async (data) => {
     try {
-      await scheduleServices.create(data);
+      if (schedule) {
+        await scheduleServices.update({ ...data, id: schedule.id });
+      } else {
+        await scheduleServices.create(data);
+      }
       queryClient.invalidateQueries(['schedules']);
       onFinish();
     } catch (err) {
       if (err instanceof AxiosError) {
-        console.log(err);
         if (err.response?.status === 409) {
           setError('startDate', { message: 'Você já possui um agendamento para esse horário.' });
         }
