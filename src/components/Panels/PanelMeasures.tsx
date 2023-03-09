@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { createMeasuresSchema } from '../../schemas/createMeasuresFormsSchema';
 import measuresService from '../../services/measures';
 import { changeEditedItemToArray } from '../../utils/changeEditedItemToArray';
-import { AlertChoseMeasureToEdit } from '../Alerts/AlertChoseMeasureToEdit';
+import { ModalChoseMeasureToEdit } from '../Modals/ModalChoseMeasureToEdit';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { ChartClientMeasures } from '../Charts/ChartClientMeasures';
 import { FormsCreateMeasures } from '../Forms/FormsCreateMeasures';
@@ -83,7 +83,7 @@ export const PanelMeasures = ({ measures, clientId }: PanelMeasuresProps) => {
       {
         currMeasures.length > 0 && (
           <>
-            <AlertChoseMeasureToEdit
+            <ModalChoseMeasureToEdit
               leastDestructiveRef={cancelRef}
               onClose={onClose}
               isOpen={isOpen}

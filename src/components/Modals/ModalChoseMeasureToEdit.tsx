@@ -1,10 +1,10 @@
-import { AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogOverlay, AlertDialogProps, Select } from '@chakra-ui/react';
+import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, ModalOverlay, ModalProps, Select } from '@chakra-ui/react';
 import { Measures } from '@prisma/client';
 import { useEffect, useState } from 'react';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import { ButtonSecondary } from '../Buttons/ButtonSecondary';
 
-type AlertChoseMeasureToEditProps = Omit<AlertDialogProps, 'children'> & {
+type ModalChoseMeasureToEditProps = Omit<ModalProps, 'children'> & {
   measures: Measures[];
   onMeasuredChosen: (measuresId: string) => void;
   onDeleteMeasureChosen: (measuresId: string) => void;
@@ -12,7 +12,7 @@ type AlertChoseMeasureToEditProps = Omit<AlertDialogProps, 'children'> & {
   onClose: () => void;
 };
 
-export const AlertChoseMeasureToEdit = ({ isOpen, onClose, leastDestructiveRef, measures, onMeasuredChosen, onDeleteMeasureChosen }: AlertChoseMeasureToEditProps) => {
+export const ModalChoseMeasureToEdit = ({ isOpen, onClose, measures, onMeasuredChosen, onDeleteMeasureChosen }: ModalChoseMeasureToEditProps) => {
   const [measuresIdChosen, setMeasuresIdChosen] = useState(measures[0].id);
 
   useEffect(() => {
@@ -30,18 +30,17 @@ export const AlertChoseMeasureToEdit = ({ isOpen, onClose, leastDestructiveRef, 
   };
 
   return (
-    <AlertDialog
+    <Modal
       isOpen={isOpen}
-      leastDestructiveRef={leastDestructiveRef}
       onClose={onClose}
     >
-      <AlertDialogOverlay>
-        <AlertDialogContent>
-          <AlertDialogHeader fontSize="lg">
+      <ModalOverlay>
+        <ModalContent>
+          <ModalHeader fontSize="lg">
             Deseja alterar as medidas de qual data ?
-          </AlertDialogHeader>
+          </ModalHeader>
 
-          <AlertDialogBody>
+          <ModalBody>
             <Select
               borderRadius="7px"
               bgColor="#F1D7FF99"
@@ -56,9 +55,9 @@ export const AlertChoseMeasureToEdit = ({ isOpen, onClose, leastDestructiveRef, 
                 ))
               }
             </Select>
-          </AlertDialogBody>
+          </ModalBody>
 
-          <AlertDialogFooter>
+          <ModalFooter>
             <ButtonSecondary onClick={onClose} >
               Cancelar
             </ButtonSecondary>
@@ -68,9 +67,9 @@ export const AlertChoseMeasureToEdit = ({ isOpen, onClose, leastDestructiveRef, 
             <ButtonPrimary onClick={onClickToChose} ml="3" >
               Escolher
             </ButtonPrimary>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialogOverlay>
-    </AlertDialog>
+          </ModalFooter>
+        </ModalContent>
+      </ModalOverlay>
+    </Modal>
   );
 };
