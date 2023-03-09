@@ -43,10 +43,22 @@ const update = async (schedule: ScheduleToUpdate) => {
   return scheduleUpdated;
 };
 
+const deleteOne = async (scheduleId: string) => {
+  const { data } = await api.delete<Schedule>(`/api/schedule/${scheduleId}`);
+
+  const scheduleDeleted = { ...data };
+
+  scheduleDeleted.startDate = new Date(scheduleDeleted.startDate);
+  scheduleDeleted.endDate = new Date(scheduleDeleted.endDate);
+
+  return scheduleDeleted;
+};
+
 const scheduleServices = {
   getAWeek,
   create,
   update,
+  deleteOne,
 };
 
 export default scheduleServices;
