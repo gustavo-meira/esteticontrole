@@ -30,10 +30,23 @@ const create = async (schedule: CreateScheduleFormsSchema) => {
   return scheduleCreated;
 };
 
+type ScheduleToUpdate = CreateScheduleFormsSchema & Pick<Schedule, 'id'>;
+
+const update = async (schedule: ScheduleToUpdate) => {
+  const { data } = await api.put<Schedule>(`/api/schedule/${schedule.id}`, schedule);
+
+  const scheduleUpdated = { ...data };
+
+  scheduleUpdated.startDate = new Date(scheduleUpdated.startDate);
+  scheduleUpdated.endDate = new Date(scheduleUpdated.endDate);
+
+  return scheduleUpdated;
+};
 
 const scheduleServices = {
   getAWeek,
   create,
+  update,
 };
 
 export default scheduleServices;
