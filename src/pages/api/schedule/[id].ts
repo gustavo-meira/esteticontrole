@@ -4,7 +4,7 @@ import { scheduleToCreateOrUpdateSchema } from '../../../api/schemas/ScheduleSch
 import { checkScheduleConflicts } from '../../../api/utils/checkScheduleConflicts';
 import { prisma } from '../../../lib/prisma';
 
-const acceptedMethods = ['PUT'];
+const acceptedMethods = ['PUT', 'DELETE'];
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (!acceptedMethods.includes(req.method as string)) {
@@ -49,6 +49,28 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       res.status(200).json(scheduleEdited);
+    } catch (err) {
+      if (err instanceof ZodError) {
+        res.status(400).json({ message: err.message });
+      }
+
+      res.status(500).send({});
+    }
+  }
+
+  if (req.method === 'DELETE') {
+    const scheduleIdSchema = z.string().cuid();
+
+    try {
+      const id = scheduleIdSchema.parse(req.query.id);
+
+      const scheduleDeleted = await prisma.schedule.delete({
+        where: {
+          id,
+        },
+      });
+
+      res.status(200).send(scheduleDeleted);
     } catch (err) {
       if (err instanceof ZodError) {
         res.status(400).json({ message: err.message });
