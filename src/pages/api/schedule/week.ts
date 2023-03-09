@@ -26,7 +26,7 @@ const handler: NextApiHandler = async (req, res) => {
           },
         },
         orderBy: {
-          startDate: 'desc',
+          startDate: 'asc',
         },
       });
 
