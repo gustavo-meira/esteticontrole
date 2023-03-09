@@ -7,7 +7,7 @@ import { createScheduleFormsSchema } from '../../schemas/schedule.schemas';
 import scheduleServices from '../../services/schedule';
 import { Schedule } from '@prisma/client';
 import { serializeScheduleToForms } from '../../utils/serializeScheduleToForms';
-import { Flex, Input, Select, Textarea } from '@chakra-ui/react';
+import { Box, Flex, Input, Select, Text, Textarea } from '@chakra-ui/react';
 import { ButtonPrimary } from '../Buttons/ButtonPrimary';
 import clientService from '../../services/client';
 
@@ -46,9 +46,11 @@ export const FormsCreateSchedule = ({ onFinish, schedule }: FormsCreateScheduleP
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Flex flexDir="column">
-        <Input list="clients" {...register('clientName')} placeholder="Cliente" />
-        { errors.clientName && <p>{errors.clientName.message}</p> }
+      <Flex mt="2" gap="2" flexDir="column">
+        <Box>
+          <Input bgColor="#734A9136" list="clients" {...register('clientName')} placeholder="Cliente" />
+          { errors.clientName && <Text color="red.400">{errors.clientName.message}</Text> }
+        </Box>
         <datalist id="clients">
           {
             clients?.map((client) => (
@@ -56,27 +58,33 @@ export const FormsCreateSchedule = ({ onFinish, schedule }: FormsCreateScheduleP
             ))
           }
         </datalist>
-        <Input {...register('treatment')} placeholder="Procedimento*" />
-        <Input {...register('startDate')} type="datetime-local" />
-        { errors.startDate && <p>{errors.startDate.message}</p> }
-        <Select {...register('duration')}>
-          <option disabled selected hidden>Duração</option>
-          <option value="15">15 minutos</option>
-          <option value="30">30 minutos</option>
-          <option value="45">45 minutos</option>
-          <option value="60">1 hora</option>
-          <option value="75">1 hora 15 minutos</option>
-          <option value="90">1 hora 30 minutos</option>
-          <option value="105">1 hora 45 minutos</option>
-          <option value="120">2 horas</option>
-          <option value="135">2 horas 15 minutos</option>
-          <option value="150">2 horas 30 minutos</option>
-          <option value="165">2 horas 45 minutos</option>
-          <option value="180">3 horas</option>
-        </Select>
-        { errors.duration && <p>{errors.duration.message}</p> }
-        <Textarea {...register('notes')} placeholder="Notas*" />
-        <ButtonPrimary type="submit">Agendar</ButtonPrimary>
+        <Input bgColor="#734A9136" {...register('treatment')} placeholder="Procedimento*" />
+        <Flex gap="2">
+          <Box>
+            <Input bgColor="#734A9136" {...register('startDate')} type="datetime-local" />
+            { errors.startDate && <Text color="red.400">{errors.startDate.message}</Text> }
+          </Box>
+          <Box>
+            <Select bgColor="#734A9136" {...register('duration')}>
+              <option disabled selected hidden>Duração</option>
+              <option value="15">15 minutos</option>
+              <option value="30">30 minutos</option>
+              <option value="45">45 minutos</option>
+              <option value="60">1 hora</option>
+              <option value="75">1 hora 15 minutos</option>
+              <option value="90">1 hora 30 minutos</option>
+              <option value="105">1 hora 45 minutos</option>
+              <option value="120">2 horas</option>
+              <option value="135">2 horas 15 minutos</option>
+              <option value="150">2 horas 30 minutos</option>
+              <option value="165">2 horas 45 minutos</option>
+              <option value="180">3 horas</option>
+            </Select>
+            { errors.duration && <Text color="red.400">{errors.duration.message}</Text> }
+          </Box>
+        </Flex>
+        <Textarea bgColor="#734A9136" {...register('notes')} placeholder="Notas*" />
+        <ButtonPrimary alignSelf="flex-end" m="0.5" mr="0" width="fit-content" type="submit">Agendar</ButtonPrimary>
       </Flex>
     </form>
   );
