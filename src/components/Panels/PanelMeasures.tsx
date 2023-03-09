@@ -1,6 +1,6 @@
 import { Box, useDisclosure } from '@chakra-ui/react';
 import { Measures } from '@prisma/client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { createMeasuresSchema } from '../../schemas/createMeasuresFormsSchema';
 import measuresService from '../../services/measures';
@@ -27,7 +27,6 @@ export const PanelMeasures = ({ measures, clientId }: PanelMeasuresProps) => {
   const [currMeasures, setCurrMeasures] = useState(measures.sort(sortMeasuresByDate));
   const [measuresToEdit, setMeasuresToEdit] = useState<Measures | null>(null);
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     setMeasuresToEdit(null);
@@ -84,7 +83,6 @@ export const PanelMeasures = ({ measures, clientId }: PanelMeasuresProps) => {
         currMeasures.length > 0 && (
           <>
             <ModalChoseMeasureToEdit
-              leastDestructiveRef={cancelRef}
               onClose={onClose}
               isOpen={isOpen}
               measures={currMeasures}
